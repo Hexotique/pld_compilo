@@ -13,8 +13,8 @@ OBJ_DIR := obj
 SRC := $(wildcard $(SRC_DIR)/*.cpp)
 OBJ := $(SRC:$(SRC_DIR)/%.cpp=$(OBJ_DIR)/%.o)
 
-CC 			:= clang++
-CFLAGS 		:= -g -c -std=c++11 -Wno-defaulted-function-deleted -Wno-unknown-warning-option
+CXX			:= clang++
+CXXFLAGS	:= -g -c -std=c++11 -Wno-defaulted-function-deleted -Wno-unknown-warning-option
 CPPFLAGS 	:= -I $(ANTLR4_INCDIR) -I $(GENERATED) -I $(INC_DIR)
 LDFLAGS 	:= -g
 LDLIBS 		:=
@@ -23,21 +23,21 @@ LDLIBS 		:=
 
 all: dirs antlr $(EXE)
 
-tests:
+test:
 	sh ./tests/test_if.sh
 
 $(EXE): $(OBJ) $(ANTLR4_FILES:%=$(OBJ_DIR)/%.o)
-	$(CC) $(LDFLAGS) $^ $(ANTLR4_LIBDIR)/libantlr4-runtime.so -o $@
+	$(CXX) $(LDFLAGS) $^ $(ANTLR4_LIBDIR)/libantlr4-runtime.so -o $@
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
-	$(CC) $(CPPFLAGS) $(CFLAGS) -c $< -o $@
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $< -o $@
 
 antlr: $(GRAMMAR)
 	$(ANTLR4_BINDIR)/antlr4 -visitor -no-listener -Dlanguage=Cpp -o $(GENERATED) $<
-	$(CC) $(CPPFLAGS) $(CFLAGS) $(GENERATED)/ifccBaseVisitor.cpp -o $(OBJ_DIR)/ifccBaseVisitor.o
-	$(CC) $(CPPFLAGS) $(CFLAGS) $(GENERATED)/ifccLexer.cpp -o $(OBJ_DIR)/ifccLexer.o
-	$(CC) $(CPPFLAGS) $(CFLAGS) $(GENERATED)/ifccVisitor.cpp -o $(OBJ_DIR)/ifccVisitor.o
-	$(CC) $(CPPFLAGS) $(CFLAGS) $(GENERATED)/ifccParser.cpp -o $(OBJ_DIR)/ifccParser.o
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(GENERATED)/ifccBaseVisitor.cpp -o $(OBJ_DIR)/ifccBaseVisitor.o
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(GENERATED)/ifccLexer.cpp -o $(OBJ_DIR)/ifccLexer.o
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(GENERATED)/ifccVisitor.cpp -o $(OBJ_DIR)/ifccVisitor.o
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(GENERATED)/ifccParser.cpp -o $(OBJ_DIR)/ifccParser.o
 
 dirs:
 	mkdir -p $(OBJ_DIR)

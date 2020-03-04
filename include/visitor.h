@@ -15,21 +15,8 @@
 class  Visitor : public ifccVisitor {
 public:
 
-  virtual antlrcpp::Any visitAxiom(ifccParser::AxiomContext *ctx) override {
-    return visitChildren(ctx);
-  }
+  virtual antlrcpp::Any visitAxiom(ifccParser::AxiomContext *ctx) override;
 
-  virtual antlrcpp::Any visitProg(ifccParser::ProgContext *ctx) override {
-
-     int retval = stoi(ctx->CONST()->getText());
-     std::cout<<".globl	main\n"
-           " main: \n"
-           " 	movl	$"<<retval<<", %eax\n"
-           " 	ret\n";
-
-     return 0;
-  }
-
-
+  virtual antlrcpp::Any visitProg(ifccParser::ProgContext *ctx) override;
 };
 

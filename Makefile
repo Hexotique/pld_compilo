@@ -24,6 +24,7 @@ LDLIBS 		:=
 all: dirs antlr $(EXE)
 
 test:
+	rm -rf ./tests/pld-test-output
 	sh ./tests/test_if.sh
 
 $(EXE): $(OBJ) $(ANTLR4_FILES:%=$(OBJ_DIR)/%.o)

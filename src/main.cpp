@@ -12,30 +12,33 @@
 using namespace antlr4;
 using namespace std;
 
-int main(int argn, const char **argv) {
-  stringstream in;
-  if (argn==2) {
-     ifstream lecture(argv[1]);
-     in << lecture.rdbuf();
-  }
-  ANTLRInputStream input(in.str());
-  ifccLexer lexer(&input);
-  CommonTokenStream tokens(&lexer);
+int main(int argn, const char **argv)
+{
+    stringstream in;
+    if (argn == 2)
+    {
+        ifstream lecture(argv[1]);
+        in << lecture.rdbuf();
+    }
+    ANTLRInputStream input(in.str());
+    ifccLexer lexer(&input);
+    CommonTokenStream tokens(&lexer);
 
-  tokens.fill();
-  //for (auto token : tokens.getTokens()) {
-  //  std::cout << token->toString() << std::endl;
-  //}
+    tokens.fill();
+    for (auto token : tokens.getTokens()) {
+      std::cout << token->toString() << std::endl;
+    }
 
-  ifccParser parser(&tokens);
-  tree::ParseTree* tree = parser.axiom();
+    ifccParser parser(&tokens);
+    tree::ParseTree *tree = parser.axiom();
 
-  Visitor visitor;
-  visitor.visit(tree);
+    Visitor visitor;
+    visitor.visit(tree);
 
-  if (lexer.getNumberOfSyntaxErrors() || parser.getNumberOfSyntaxErrors()) {
-	return 1;
-  }
+    if (lexer.getNumberOfSyntaxErrors() || parser.getNumberOfSyntaxErrors())
+    {
+        return 1;
+    }
 
-  return 0;
+    return 0;
 }

@@ -41,16 +41,6 @@ bool SymbolTable::insert(string id, string scope, string type, int line)
         }
         start->next = s;
         return true;
-    
-    return false;
-}
-
-string SymbolTable::find(string id)
-{
-    int index = hashf(id);
-    Symbol *start = head[index];
-
-    if(start == NULL) {
-
     }
+    return false;
 }

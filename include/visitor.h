@@ -5,7 +5,7 @@
 
 
 #include "antlr4-runtime.h"
-#include "../antlr4-src/ifccVisitor.h"
+#include "ifccVisitor.h"
 
 
 /**

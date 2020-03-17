@@ -1,44 +1,33 @@
-#include <iostream>
 #include <string>
+#include <list>
+
+#include "symbol.h"
 
 #define TABLE_SIZE 100
 
 using namespace std;
 
-class Symbol
-{
-public:
-    Symbol()
-        : next(NULL){};
-
-    Symbol(string key, string value, string t, int num)
-        : identifier(key), scope(value), type(t), lineNum(num){};
-
-    void print();
-
-protected:
-    string identifier, scope, type;
-    int lineNum;
-    Symbol *next;
-
-    friend class SymbolTable;
-};
-
 class SymbolTable
 {
 public:
-    SymbolTable();
+    SymbolTable()
+        : cur_nesting_level(0){};
 
-    int hashf(string id);
+    void enter_scope();
 
-    bool insert(string id, string scope, string type, int line);
+    void exit_scope();
 
-    string find(string id);
+    void insert(Symbol *s);
 
-    bool remove(string id);
-
-    bool modify(string id, string scope, string type, int line);
+    Symbol *lookup(string id);
 
 protected:
-    Symbol *head[TABLE_SIZE];
+    SymbolTableScope cur_scope_type;
+    unsigned int cur_nesting_level;
+    string cur_scope_name;
+
+    list<Symbol *> table[TABLE_SIZE];
+
+private:
+    int hashf(string id);
 };

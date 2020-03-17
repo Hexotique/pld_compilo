@@ -1,15 +1,32 @@
 #include "symbolTable.h"
 
-void Symbol::print()
+void SymbolTable::enter_scope()
 {
+    cur_nesting_level++;
 }
 
-SymbolTable::SymbolTable()
+void SymbolTable::exit_scope()
 {
-    for (int i = 0; i < TABLE_SIZE; i++)
+    cur_nesting_level--;
+}
+
+void SymbolTable::insert(Symbol *s)
+{
+    int index = hashf(s->identifier);
+    table[index].push_front(s);
+}
+
+Symbol *SymbolTable::lookup(string id)
+{
+    int index = hashf(id);
+    for (const auto s : table[index])
     {
-        head[i] = NULL;
-    };
+        if (s->identifier == id)
+        {
+            return s;
+        }
+    }
+    return nullptr;
 }
 
 int SymbolTable::hashf(string id)
@@ -19,28 +36,5 @@ int SymbolTable::hashf(string id)
     {
         sum += id[i];
     }
-    return sum % 100;
-}
-
-bool SymbolTable::insert(string id, string scope, string type, int line)
-{
-    int index = hashf(id);
-    Symbol *s = new Symbol(id, scope, type, line);
-
-    if (head[index] == NULL)
-    {
-        head[index] = s;
-        return true;
-    }
-    else
-    {
-        Symbol *start = head[index];
-        while (start->next != NULL)
-        {
-            start = start->next;
-        }
-        start->next = s;
-        return true;
-    }
-    return false;
+    return sum % TABLE_SIZE;
 }

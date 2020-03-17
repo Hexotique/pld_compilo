@@ -4,9 +4,9 @@
 #include <cstdlib>
 
 #include "antlr4-runtime.h"
-#include "../antlr4-src/ifccLexer.h"
-#include "../antlr4-src/ifccParser.h"
-#include "../antlr4-src/ifccBaseVisitor.h"
+#include "ifccLexer.h"
+#include "ifccParser.h"
+#include "ifccBaseVisitor.h"
 #include "visitor.h"
 
 using namespace antlr4;

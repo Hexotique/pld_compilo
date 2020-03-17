@@ -4,7 +4,7 @@
 #pragma once
 
 #include "antlr4-runtime.h"
-#include "../antlr4-src/ifccVisitor.h"
+#include "ifccVisitor.h"
 
 /**
  * This class provides an empty implementation of ifccVisitor, which can be

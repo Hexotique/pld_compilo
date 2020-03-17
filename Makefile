@@ -1,11 +1,11 @@
 GENERATED 		:= antlr4-src
 GRAMMAR 		:= ifcc.g4
-ANTLR4_BINDIR 	:= /usr/bin
+ANTLR4_BIN	 	:= /usr/bin/antlr4
+ANTLR4_LIB 		:= /usr/lib/libantlr4-runtime.so
 ANTLR4_INCDIR 	:= /usr/include/antlr4-runtime
-ANTLR4_LIBDIR 	:= /usr/lib
 ANTLR4_FILES 	:= ifccBaseVisitor ifccLexer ifccVisitor ifccParser
 
-EXE := ifcc
+EXE 	:= ifcc
 SRC_DIR := src
 INC_DIR := include
 OBJ_DIR := obj
@@ -28,13 +28,13 @@ test:
 	sh ./tests/test_if.sh
 
 $(EXE): $(OBJ) $(ANTLR4_FILES:%=$(OBJ_DIR)/%.o)
-	$(CXX) $(LDFLAGS) $^ $(ANTLR4_LIBDIR)/libantlr4-runtime.so -o $@
+	$(CXX) $(LDFLAGS) $^ $(ANTLR4_LIB) -o $@
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $< -o $@
 
 antlr: $(GRAMMAR)
-	$(ANTLR4_BINDIR)/antlr4 -visitor -no-listener -Dlanguage=Cpp -o $(GENERATED) $<
+	$(ANTLR4_BIN) -visitor -no-listener -Dlanguage=Cpp -o $(GENERATED) $<
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(GENERATED)/ifccBaseVisitor.cpp -o $(OBJ_DIR)/ifccBaseVisitor.o
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(GENERATED)/ifccLexer.cpp -o $(OBJ_DIR)/ifccLexer.o
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(GENERATED)/ifccVisitor.cpp -o $(OBJ_DIR)/ifccVisitor.o

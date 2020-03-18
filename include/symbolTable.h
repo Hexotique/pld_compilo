@@ -22,7 +22,7 @@ public:
     Symbol *lookup(string id);
 
 protected:
-    SymbolTableScope cur_scope_type;
+    SymbolScope cur_scope_type;
     unsigned int cur_nesting_level;
     string cur_scope_name;
 

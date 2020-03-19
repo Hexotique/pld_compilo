@@ -1,4 +1,4 @@
-#include "symbolTable.h"
+#include "SymbolTable.h"
 
 void SymbolTable::enter_scope()
 {

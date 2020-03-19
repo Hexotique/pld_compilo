@@ -1,4 +1,8 @@
+#pragma once
+
 #include <string>
+
+#include "Type.h"
 
 using namespace std;
 
@@ -14,13 +18,13 @@ enum class SymbolScope
 class Symbol
 {
 public:
-    Symbol(){};
-
-    Symbol(SymbolScope sts, string id, string sn, unsigned int nl, unsigned int ln)
-        : scope_type(sts), identifier(id), scope_name(sn), nesting_level(nl), line_num(ln) {};
+    Symbol(SymbolScope sts, string st, string id, string sn, unsigned int nl, unsigned int ln)
+        : scope_type(sts), type(st), identifier(id), scope_name(sn), nesting_level(nl), line_num(ln) {};
 
 protected:
     SymbolScope scope_type;
+
+    Type type;
 
     string identifier;
     string scope_name;

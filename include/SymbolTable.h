@@ -1,7 +1,7 @@
 #include <string>
 #include <list>
 
-#include "symbol.h"
+#include "Symbol.h"
 
 #define TABLE_SIZE 100
 

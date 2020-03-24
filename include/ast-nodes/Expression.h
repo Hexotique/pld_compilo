@@ -5,5 +5,7 @@
 class Expression : public ASTNode
 {
 public:
-    void buildIR(CFG *cfg);
+    virtual void buildIR(CFG *cfg) = 0;
+
+protected:
 };

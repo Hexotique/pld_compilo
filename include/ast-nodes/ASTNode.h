@@ -1,6 +1,6 @@
 #pragma once
 
-#include "CFG.h"
+class CFG;
 
 class ASTNode
 {

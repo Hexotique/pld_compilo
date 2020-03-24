@@ -1,11 +1,11 @@
-#pragma once
-
 #include "ASTNode.h"
+
+class CFG;
 
 class Statement : public ASTNode
 {
 public:
-    void buildIR(CFG *);
+    virtual void buildIR(CFG *) = 0;
 
 protected:
 };

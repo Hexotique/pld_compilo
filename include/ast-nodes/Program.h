@@ -2,19 +2,21 @@
 
 #include <vector>
 
-#include "ASTNode.h"
-#include "Function.h"
-
 using namespace std;
 
-class Program : public ASTNode
+class Function;
+class CFG;
+
+class Program
 {
 public:
     Program() {}
 
+    vector<Function *> getFunctions();
+
     void addFunction(Function *f);
 
-    void buildIR(CFG *cfg);
+    vector<CFG *> buildIR();
 
 protected:
     vector<Function *> fcts;

@@ -13,28 +13,39 @@
 
 using namespace std;
 
-class ASTNode;
+class Function;
 class BasicBlock;
+class SymbolTable;
 
 class CFG
 {
 public:
-    CFG(ASTNode *a)
-        : ast(a){};
+    CFG(Function *f);
 
-    void addBasicBlock(BasicBlock *bb);
+    BasicBlock *get_current_block();
+
+    void add_basic_block(BasicBlock *bb);
 
     void gen_asm(ostream &o);
-    
+
     string IR_reg_to_asm(string reg); /**< helper method: inputs a IR reg or input variable, returns e.g. "-24(%rbp)" for the proper value of 24 */
-    
+
     void gen_asm_prologue(ostream &o);
-    
+
     void gen_asm_epilogue(ostream &o);
 
+    void enter_scope();
+
+    void exit_scope();
+
+    vector<SymbolTable *> get_symbol_tables();
+
 protected:
-    ASTNode *ast;
+    Function *ast;
 
     BasicBlock *currentBlock;
     vector<BasicBlock *> blocks;
+
+    SymbolTable *currentTable;
+    vector<SymbolTable *> tabSymbols;
 };

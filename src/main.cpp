@@ -10,6 +10,7 @@
 
 #include "Visitor.h"
 #include "ASTNode.h"
+#include "Program.h"
 #include "CFG.h"
 
 using namespace antlr4;
@@ -44,10 +45,13 @@ int main(int argn, const char **argv)
     }
 
     Visitor visitor;
-    ASTNode *ast = visitor.visit(tree);
-    CFG *cfg = new CFG(ast);
-    ast->buildIR(cfg);
-    //cfg->gen_asm(cout);
+    Program *prog = visitor.visit(tree);
+    
+    vector<CFG *> cfgs = prog->buildIR();
+    for (const auto cfg : cfgs)
+    {
+        cfg->gen_asm(cout);
+    }
 
     return 0;
 }

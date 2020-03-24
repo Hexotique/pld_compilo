@@ -5,8 +5,6 @@
 
 #include "antlr4-runtime.h"
 #include "ifccVisitor.h"
-#include "Program.h"
-#include "Function.h"
 
 /**
  * This class provides an empty implementation of ifccVisitor, which can be
@@ -15,21 +13,28 @@
 class Visitor : public ifccVisitor
 {
 public:
-    virtual antlrcpp::Any visitProg(ifccParser::ProgContext *context) override;
+    antlrcpp::Any visitProg(ifccParser::ProgContext *context) override;
 
-    virtual antlrcpp::Any visitFunction(ifccParser::FunctionContext *context) override;
+    antlrcpp::Any visitFunction(ifccParser::FunctionContext *context) override;
 
-    virtual antlrcpp::Any visitFuncParams(ifccParser::FuncParamsContext *context) override;
+    antlrcpp::Any visitFuncParams(ifccParser::FuncParamsContext *context) override;
 
-    virtual antlrcpp::Any visitParamList(ifccParser::ParamListContext *context) override;
+    antlrcpp::Any visitParamList(ifccParser::ParamListContext *context) override;
 
-    virtual antlrcpp::Any visitDeclaration(ifccParser::DeclarationContext *context) override;
+    antlrcpp::Any visitDeclaration(ifccParser::DeclarationContext *context) override;
 
-    virtual antlrcpp::Any visitBlock(ifccParser::BlockContext *context) override;
+    antlrcpp::Any visitBlock(ifccParser::BlockContext *context) override;
 
-    virtual antlrcpp::Any visitStatement(ifccParser::StatementContext *context) override;
+    antlrcpp::Any visitReturnStatement(ifccParser::ReturnStatementContext *context) override;
 
-    virtual antlrcpp::Any visitReturnStatement(ifccParser::ReturnStatementContext *context) override;
+    antlrcpp::Any visitExprStatement(ifccParser::ExprStatementContext *context) override;
 
-    virtual antlrcpp::Any visitExpression(ifccParser::ExpressionContext *context) override;
+    antlrcpp::Any visitParExpr(ifccParser::ParExprContext *context) override;
+
+    antlrcpp::Any visitAddSubExpr(ifccParser::AddSubExprContext *context) override;
+
+    antlrcpp::Any visitAssignExpr(ifccParser::AssignExprContext *context) override;
+
+    antlrcpp::Any visitConstExpr(ifccParser::ConstExprContext *context) override;
+
 };

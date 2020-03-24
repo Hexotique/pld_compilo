@@ -12,11 +12,15 @@ declaration: TYPE IDENTIFIER;
 
 block: '{' statement* '}';
 
-statement: returnStatement;
+statement:
+	RETURN expression? ';'	# returnStatement
+	| expression ';'		# exprStatement;
 
-returnStatement: RETURN expression? ';';
-
-expression: CONST;
+expression:
+	CONST										# constExpr
+	| expression ADD_SUB_OPERATOR expression	# addSubExpr
+	| '(' expression ')'						# parExpr
+	| IDENTIFIER '=' expression					# assignExpr;
 
 TYPE: 'int' | 'char';
 RETURN: 'return';
@@ -26,6 +30,8 @@ IDENTIFIER: NONDIGIT (NONDIGIT | DIGIT)*;
 
 fragment NONDIGIT: [a-zA-Z_];
 fragment DIGIT: [0-9];
+
+ADD_SUB_OPERATOR: '+' | '-';
 
 COMMENT: ('/*' .*? '*/' | '//' .*? '\n') -> skip;
 DIRECTIVE: '#' .*? '\n' -> skip;

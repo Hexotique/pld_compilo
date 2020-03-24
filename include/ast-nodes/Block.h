@@ -3,7 +3,8 @@
 #include <vector>
 
 #include "ASTNode.h"
-#include "Statement.h"
+
+class Statement;
 
 using namespace std;
 

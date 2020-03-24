@@ -4,13 +4,11 @@
 #include <vector>
 #include <iostream>
 
-#include "Type.h"
-
 using namespace std;
 
 class BasicBlock;
 class CFG;
-class DefFonction;
+class Type;
 
 //! The class for one 3-address instruction
 class IRInstr
@@ -33,16 +31,40 @@ public:
         cmp_le
     } Operation;
 
-    /**  constructor */
-    IRInstr(BasicBlock *bb_, Operation op, Type t, vector<string> params);
+    IRInstr(Type *type)
+        : t(type) {}
 
-    /** Actual code generation */
-    virtual void gen_asm(ostream &o); /**< x86 assembly code generation for this IR instruction */
+    void set_block(BasicBlock *block);
 
-private:
-    BasicBlock *bb; /**< The BB this instruction belongs to, which provides a pointer to the CFG this instruction belong to */
-    Operation op;
-    Type t;
-    vector<string> params; /**< For 3-op instrs: d, x, y; for ldconst: d, c;  For call: label, d, params;  for wmem and rmem: choose yourself */
-                           // if you subclass IRInstr, each IRInstr subclass has its parameters and the previous (very important) comment becomes useless: it would be a better design.
+    virtual void gen_asm(ostream &o) = 0;
+
+protected:
+    BasicBlock *bb;
+    Type *t;
+};
+
+class LdConstInstr : public IRInstr
+{
+public:
+    LdConstInstr(Type *type, string dest, string v)
+        : IRInstr(type), destination(dest), value(v){};
+
+    void gen_asm(ostream &o);
+
+protected:
+    string destination;
+    string value;
+};
+
+class CopyInstr : public IRInstr
+{
+public:
+    CopyInstr(Type *type, string dest, string src)
+        : IRInstr(type), destination(dest), source(src) {}
+
+    void gen_asm(ostream &o);
+
+protected:
+    string destination;
+    string source;
 };

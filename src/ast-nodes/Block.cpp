@@ -7,7 +7,7 @@ void Block::addStatement(Statement *s)
     statements.push_back(s);
 }
 
-void Block::buildIR(CFG *cfg)
+string Block::buildIR(CFG *cfg)
 {
     cfg->enter_scope();
     for (Statement *s : statements)
@@ -15,4 +15,6 @@ void Block::buildIR(CFG *cfg)
         s->buildIR(cfg);
     }
     cfg->exit_scope();
+
+    return "";
 }

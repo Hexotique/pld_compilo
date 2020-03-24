@@ -1,12 +1,16 @@
+#include <string>
+
 #include "Expression.h"
+
+using namespace std;
 
 class Const : public Expression
 {
 public:
-    Const(int c)
-        : value(c) {}
+    Const(Type *type, int c)
+        : Expression(type), value(c) {}
 
-    void buildIR(CFG *cfg);
+    string buildIR(CFG *cfg);
 
 protected:
     int value;

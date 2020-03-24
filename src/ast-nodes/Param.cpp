@@ -1,6 +1,6 @@
 #include "Param.h"
 
-void Param::buildIR(CFG *cfg)
+string Param::buildIR(CFG *cfg)
 {
-    
+    return "";
 }

@@ -2,13 +2,14 @@
 #include "Param.h"
 #include "Block.h"
 
-void Function::buildIR(CFG *cfg)
+string Function::buildIR(CFG *cfg)
 {
     for (Param *param : fctParams)
     {
         param->buildIR(cfg);
     }
     fctBlock->buildIR(cfg);
+    return "";
 }
 
 string Function::getFctName()

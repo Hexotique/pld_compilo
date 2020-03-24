@@ -27,6 +27,8 @@ public:
 
     antlrcpp::Any visitReturnStatement(ifccParser::ReturnStatementContext *context) override;
 
+    antlrcpp::Any visitDefinitionStatement(ifccParser::DefinitionStatementContext *context) override;
+
     antlrcpp::Any visitExprStatement(ifccParser::ExprStatementContext *context) override;
 
     antlrcpp::Any visitParExpr(ifccParser::ParExprContext *context) override;

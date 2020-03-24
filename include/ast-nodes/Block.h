@@ -13,7 +13,7 @@ class Block : public ASTNode
 public:
     void addStatement(Statement *);
 
-    void buildIR(CFG *);
+    string buildIR(CFG *);
 
 protected:
     vector<Statement *> statements;

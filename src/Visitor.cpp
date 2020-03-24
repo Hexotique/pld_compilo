@@ -9,6 +9,7 @@
 #include "Assignment.h"
 #include "AddSubExpr.h"
 #include "Declaration.h"
+#include "Definition.h"
 
 antlrcpp::Any Visitor::visitProg(ifccParser::ProgContext *context)
 {
@@ -37,8 +38,9 @@ antlrcpp::Any Visitor::visitParamList(ifccParser::ParamListContext *context) { r
 
 antlrcpp::Any Visitor::visitDeclaration(ifccParser::DeclarationContext *context)
 {
-    string type = context->TYPE()->getText();
+    Type *type = new Type(context->TYPE()->getText());
     string identifier = context->IDENTIFIER()->getText();
+
     return new Declaration(type, identifier);
 }
 
@@ -60,6 +62,15 @@ antlrcpp::Any Visitor::visitReturnStatement(ifccParser::ReturnStatementContext *
     return (Statement *)(new Return(new Type("int"), expr));
 }
 
+antlrcpp::Any Visitor::visitDefinitionStatement(ifccParser::DefinitionStatementContext *context)
+{
+    Type *type = new Type(context->TYPE()->getText());
+    string identifier = context->IDENTIFIER()->getText();
+    Expression *expr = visit(context->expression());
+    Declaration *dec = new Declaration(type, identifier);
+    return (Statement *)new Definition(dec, expr);
+}
+
 antlrcpp::Any Visitor::visitExprStatement(ifccParser::ExprStatementContext *context) { return 0; }
 
 antlrcpp::Any Visitor::visitParExpr(ifccParser::ParExprContext *context)
@@ -72,17 +83,17 @@ antlrcpp::Any Visitor::visitAddSubExpr(ifccParser::AddSubExprContext *context)
     string symb = context->ADD_SUB_OPERATOR()->getText();
     Expression *expr1 = (Expression *)visit(context->expression(0));
     Expression *expr2 = (Expression *)visit(context->expression(1));
-    return new AddSubExpr(expr1, expr2, symb);
+    return (Expression *)new AddSubExpr(expr1, expr2, symb);
 };
 
 antlrcpp::Any Visitor::visitAssignExpr(ifccParser::AssignExprContext *context)
 {
     string identifier = context->IDENTIFIER()->getText();
     Expression *e = visit(context->expression());
-    return new Assignment(identifier, e);
+    return (Expression *)new Assignment(identifier, e);
 };
 
 antlrcpp::Any Visitor::visitConstExpr(ifccParser::ConstExprContext *context)
 {
-    return (Expression *)(new Const(stoi(context->CONST()->getText())));
+    return (Expression *)(new Const(new Type("int"), stoi(context->CONST()->getText())));
 };

@@ -12,7 +12,7 @@ public:
 
     ~AddSubExpr() {}
 
-    void buildIR(CFG *cfg);
+    string buildIR(CFG *cfg);
 
 protected:
     Expression *exp1;

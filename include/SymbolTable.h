@@ -1,11 +1,12 @@
 #include <string>
 #include <list>
 
-#include "Symbol.h"
-
 #define TABLE_SIZE 100
 
 using namespace std;
+
+class Symbol;
+class Type;
 
 class SymbolTable
 {
@@ -17,14 +18,17 @@ public:
 
     void exit_scope();
 
-    void insert(Symbol *s);
+    Symbol *insert(string label, Type *type);
 
     Symbol *lookup(string id);
 
+    int get_cur_index();
+
 protected:
-    SymbolScope cur_scope_type;
     unsigned int cur_nesting_level;
     string cur_scope_name;
+
+    int cur_index;
 
     list<Symbol *> table[TABLE_SIZE];
 

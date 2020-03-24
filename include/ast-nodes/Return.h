@@ -16,7 +16,7 @@ public:
     Return(Type *type, Expression *e)
         : retType(type), retExp(e){};
 
-    void buildIR(CFG *cfg);
+    string buildIR(CFG *cfg);
 
 protected:
     Type *retType;

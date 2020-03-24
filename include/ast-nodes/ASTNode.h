@@ -1,9 +1,13 @@
 #pragma once
 
+#include <string>
+
+using namespace std;
+
 class CFG;
 
 class ASTNode
 {
 public:
-    virtual void buildIR(CFG *cfg) = 0;
+    virtual string buildIR(CFG *cfg) = 0;
 };

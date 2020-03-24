@@ -15,7 +15,7 @@ public:
     Param(Type *t, string l)
         : type(t), label(l){};
 
-    void buildIR(CFG *);
+    string buildIR(CFG *);
 
 protected:
     Type *type;

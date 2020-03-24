@@ -1,7 +1,18 @@
 #include "Declaration.h"
 #include "CFG.h"
 
-void Declaration::buildIR(CFG *cfg)
+Type *Declaration::get_type()
 {
-    BasicBlock *bb = cfg->get_current_block();
+    return type;
+}
+
+string Declaration::get_identifier()
+{
+    return identifier;
+}
+
+string Declaration::buildIR(CFG *cfg)
+{
+    cfg->add_to_symbol_table(identifier, type);
+    return "";
 }

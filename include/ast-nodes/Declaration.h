@@ -4,15 +4,23 @@
 
 using namespace std;
 
+class Type;
+
 class Declaration : public ASTNode
 {
 public:
-    Declaration(string typ, string id)
-        : type(typ), identifier(id) {}
+    Declaration(Type *t, string id)
+        : type(t), identifier(id) {}
+
     ~Declaration() {}
-    void buildIR(CFG *cfg);
+    
+    Type *get_type();
+
+    string get_identifier();
+
+    string buildIR(CFG *cfg);
 
 protected:
-    string type;
+    Type *type;
     string identifier;
 };

@@ -19,7 +19,7 @@ public:
 
     void addParam(Param *);
 
-    void buildIR(CFG *cfg);
+    string buildIR(CFG *cfg);
 
     string getFctName();
 

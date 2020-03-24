@@ -11,9 +11,9 @@ public:
     Assignment(string id, Expression *e)
         : identifier(id), expr(e) {}
 
-    void buildIR(CFG * cfg);
+    string buildIR(CFG * cfg);
 
 protected:
     string identifier;
-    Expression *expr;    
+    Expression *expr;
 };

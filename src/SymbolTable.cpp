@@ -1,4 +1,6 @@
 #include "SymbolTable.h"
+#include "Symbol.h"
+#include "Type.h"
 
 void SymbolTable::enter_scope()
 {
@@ -10,10 +12,13 @@ void SymbolTable::exit_scope()
     cur_nesting_level--;
 }
 
-void SymbolTable::insert(Symbol *s)
+Symbol *SymbolTable::insert(string label, Type *type)
 {
+    cur_index += type->get_size();
+    Symbol *s = new Symbol(type, label, cur_index);
     int index = hashf(s->identifier);
     table[index].push_front(s);
+    return s;
 }
 
 Symbol *SymbolTable::lookup(string id)
@@ -37,4 +42,9 @@ int SymbolTable::hashf(string id)
         sum += id[i];
     }
     return sum % TABLE_SIZE;
+}
+
+int SymbolTable::get_cur_index()
+{
+    return cur_index;
 }

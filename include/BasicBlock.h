@@ -44,7 +44,7 @@ public:
 
     void gen_asm(ostream &o);
 
-    void add_IRInstr(IRInstr::Operation op, Type t, vector<string> params);
+    void add_IRInstr(IRInstr *instr);
 
     void set_exit_true(BasicBlock *bb);
 

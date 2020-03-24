@@ -13,8 +13,9 @@ declaration: TYPE IDENTIFIER;
 block: '{' statement* '}';
 
 statement:
-	RETURN expression? ';'	# returnStatement
-	| expression ';'		# exprStatement;
+	RETURN expression? ';'					# returnStatement
+	| TYPE IDENTIFIER '=' expression ';'	# definitionStatement
+	| expression ';'						# exprStatement;
 
 expression:
 	CONST										# constExpr

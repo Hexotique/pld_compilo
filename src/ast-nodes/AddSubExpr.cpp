@@ -1,6 +1,6 @@
 #include "AddSubExpr.h"
 
-void AddSubExpr::buildIR(CFG *cfg)
+string AddSubExpr::buildIR(CFG *cfg)
 {
-
+    return "";
 }

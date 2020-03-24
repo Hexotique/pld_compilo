@@ -6,6 +6,8 @@
 
 using namespace std;
 
+class Type;
+
 enum class SymbolScope
 {
     global,
@@ -18,19 +20,17 @@ enum class SymbolScope
 class Symbol
 {
 public:
-    Symbol(SymbolScope sts, string st, string id, string sn, unsigned int nl, unsigned int ln)
-        : scope_type(sts), type(st), identifier(id), scope_name(sn), nesting_level(nl), line_num(ln) {};
+    Symbol(Type *t, string id, int idx)
+        : type(t), identifier(id), index(idx) {};
+
+    string get_identifier();
+
+    int get_index();
 
 protected:
-    SymbolScope scope_type;
-
-    Type type;
-
+    Type *type;
     string identifier;
-    string scope_name;
-
-    unsigned int nesting_level;
-    unsigned int line_num;
+    int index;
 
     friend class SymbolTable;
 };

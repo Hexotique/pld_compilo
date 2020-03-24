@@ -1,5 +1,11 @@
 #include "BasicBlock.h"
 #include "CFG.h"
+#include "IRInstr.h"
+
+void BasicBlock::add_IRInstr(IRInstr *instr)
+{
+    instrs.push_back(instr);
+}
 
 void BasicBlock::gen_asm(ostream &o)
 {

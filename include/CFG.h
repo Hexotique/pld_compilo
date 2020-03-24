@@ -8,6 +8,7 @@
  */
 #pragma once
 
+#include <string>
 #include <vector>
 #include <iostream>
 
@@ -16,6 +17,9 @@ using namespace std;
 class Function;
 class BasicBlock;
 class SymbolTable;
+class Symbol;
+class Type;
+class IRInstr;
 
 class CFG
 {
@@ -28,7 +32,7 @@ public:
 
     void gen_asm(ostream &o);
 
-    string IR_reg_to_asm(string reg); /**< helper method: inputs a IR reg or input variable, returns e.g. "-24(%rbp)" for the proper value of 24 */
+    string var_to_asm(string identifier); /**< helper method: inputs a IR reg or input variable, returns e.g. "-24(%rbp)" for the proper value of 24 */
 
     void gen_asm_prologue(ostream &o);
 
@@ -38,7 +42,13 @@ public:
 
     void exit_scope();
 
-    vector<SymbolTable *> get_symbol_tables();
+    void add_instruction(IRInstr *instr);
+
+    Symbol *add_to_symbol_table(string label, Type *t);
+
+    Symbol *create_temp_var(Type *t);
+
+    SymbolTable *get_symbol_table();
 
 protected:
     Function *ast;
@@ -47,5 +57,4 @@ protected:
     vector<BasicBlock *> blocks;
 
     SymbolTable *currentTable;
-    vector<SymbolTable *> tabSymbols;
 };

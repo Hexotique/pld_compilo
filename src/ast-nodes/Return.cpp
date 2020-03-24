@@ -1,7 +1,11 @@
 #include "Return.h"
+#include "Expression.h"
 #include "CFG.h"
+#include "IRInstr.h"
 
-void Return::buildIR(CFG *cfg)
+string Return::buildIR(CFG *cfg)
 {
-    cfg->get_current_block();
+    string exprTmpVar = cfg->var_to_asm(retExp->buildIR(cfg));
+    cfg->add_instruction(new CopyInstr(retExp->get_type(), "%eax", exprTmpVar));
+    return "";
 }

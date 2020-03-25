@@ -1,4 +1,4 @@
-# C compiler with antlr4/c++
+R C compiler with antlr4/c++
 
 ## Commands
 - `make` compiles the parser. Libraries and include directories default to the values that work in an Arch Linux environment.
@@ -22,7 +22,7 @@
 Feature | Implemented
 --- | :---:
 Parses basic variable types (`char` and `int`) |  []
-Handles comments in code | []
+Handles comments in code | [X]
 Handles variable declaration in the beginning of function blocks | []
 Handles variable initialisation during declaration | []
 Handles basic code blocks | []

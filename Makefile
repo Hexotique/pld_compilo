@@ -5,17 +5,21 @@ ANTLR4_LIB 		:= /usr/lib/libantlr4-runtime.so
 ANTLR4_INCDIR 	:= /usr/include/antlr4-runtime
 ANTLR4_FILES 	:= ifccBaseVisitor ifccLexer ifccVisitor ifccParser
 
-EXE 	:= ifcc
-SRC_DIR := src
-INC_DIR := include
-OBJ_DIR := obj
+EXE 		:= ifcc
+SRC_DIR 	:= src
+INC_DIRS 	:= include include/ast-nodes $(ANTLR4_INCDIR) $(GENERATED)
+OBJ_DIR 	:= obj
+
+AST_DIR		:= src/ast-nodes
+AST_SRC		:= $(wildcard $(AST_DIR)/*.cpp)
+AST_OBJ		:= $(AST_SRC:$(AST_DIR)/%.cpp=$(OBJ_DIR)/%.o)
 
 SRC := $(wildcard $(SRC_DIR)/*.cpp)
-OBJ := $(SRC:$(SRC_DIR)/%.cpp=$(OBJ_DIR)/%.o)
+OBJ := $(SRC:$(SRC_DIR)/%.cpp=$(OBJ_DIR)/%.o) $(ANTLR4_FILES:%=$(OBJ_DIR)/%.o) $(AST_OBJ) 
 
 CXX			:= clang++
 CXXFLAGS	:= -g -c -std=c++11 -Wno-defaulted-function-deleted -Wno-unknown-warning-option
-CPPFLAGS 	:= -I $(ANTLR4_INCDIR) -I $(GENERATED) -I $(INC_DIR)
+CPPFLAGS 	:= $(addprefix -I ,$(INC_DIRS))
 LDFLAGS 	:= -g
 LDLIBS 		:=
 
@@ -27,8 +31,11 @@ test:
 	rm -rf ./tests/pld-test-output
 	sh ./tests/test_if.sh
 
-$(EXE): $(OBJ) $(ANTLR4_FILES:%=$(OBJ_DIR)/%.o)
+$(EXE): $(OBJ)
 	$(CXX) $(LDFLAGS) $^ $(ANTLR4_LIB) -o $@
+
+$(OBJ_DIR)/%.o: $(AST_DIR)/%.cpp
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $< -o $@
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $< -o $@

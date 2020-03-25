@@ -25,6 +25,8 @@ public:
 
     antlrcpp::Any visitBlock(ifccParser::BlockContext *context) override;
 
+    antlrcpp::Any visitDeclarationStatement(ifccParser::DeclarationStatementContext *context) override;
+
     antlrcpp::Any visitReturnStatement(ifccParser::ReturnStatementContext *context) override;
 
     antlrcpp::Any visitDefinitionStatement(ifccParser::DefinitionStatementContext *context) override;
@@ -32,6 +34,8 @@ public:
     antlrcpp::Any visitExprStatement(ifccParser::ExprStatementContext *context) override;
 
     antlrcpp::Any visitParExpr(ifccParser::ParExprContext *context) override;
+
+    antlrcpp::Any visitVarExpr(ifccParser::VarExprContext *context) override;
 
     antlrcpp::Any visitAddSubExpr(ifccParser::AddSubExprContext *context) override;
 

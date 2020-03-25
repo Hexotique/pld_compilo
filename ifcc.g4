@@ -13,12 +13,14 @@ declaration: TYPE IDENTIFIER;
 block: '{' statement* '}';
 
 statement:
-	RETURN expression? ';'					# returnStatement
-	| TYPE IDENTIFIER '=' expression ';'	# definitionStatement
-	| expression ';'						# exprStatement;
+	RETURN expression? ';'				# returnStatement
+	| declaration (',' IDENTIFIER)* ';'	# declarationStatement
+	| declaration '=' expression ';'	# definitionStatement
+	| expression ';'					# exprStatement;
 
 expression:
 	CONST										# constExpr
+	| IDENTIFIER								# varExpr
 	| expression ADD_SUB_OPERATOR expression	# addSubExpr
 	| '(' expression ')'						# parExpr
 	| IDENTIFIER '=' expression					# assignExpr;

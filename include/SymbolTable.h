@@ -1,3 +1,4 @@
+#include <iostream>
 #include <string>
 #include <list>
 
@@ -23,6 +24,8 @@ public:
     Symbol *lookup(string id);
 
     int get_cur_index();
+
+    void show();
 
 protected:
     unsigned int cur_nesting_level;

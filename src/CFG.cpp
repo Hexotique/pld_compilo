@@ -29,7 +29,8 @@ void CFG::add_basic_block(BasicBlock *bb)
 
 void CFG::gen_asm(ostream &o)
 {
-    o << "\t.globl\t" << ast->getFctName() << endl;
+    o << ".text" << endl;
+    o << ".globl\t" << ast->getFctName() << endl;
     o << ast->getFctName() << ':' << endl;
     gen_asm_prologue(o);
     for (BasicBlock *block : blocks)
@@ -41,6 +42,7 @@ void CFG::gen_asm(ostream &o)
 string CFG::var_to_asm(string identifier)
 {
     Symbol *s = get_symbol_table()->lookup(identifier);
+
     return to_string(-1*s->get_index()) + "(%rbp)";
 }
 

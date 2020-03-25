@@ -10,6 +10,9 @@
 #include "AddSubExpr.h"
 #include "Declaration.h"
 #include "Definition.h"
+#include "DeclarationStatement.h"
+#include "ExpressionStatement.h"
+#include "Var.h"
 
 antlrcpp::Any Visitor::visitProg(ifccParser::ProgContext *context)
 {
@@ -52,31 +55,49 @@ antlrcpp::Any Visitor::visitBlock(ifccParser::BlockContext *context)
         Statement *stmt = visit(s);
         b->addStatement(stmt);
     }
-
     return b;
 }
 
 antlrcpp::Any Visitor::visitReturnStatement(ifccParser::ReturnStatementContext *context)
 {
     Expression *expr = visit(context->expression());
-    return (Statement *)(new Return(new Type("int"), expr));
+    return (Statement *)new Return(new Type("int"), expr);
+}
+
+antlrcpp::Any Visitor::visitDeclarationStatement(ifccParser::DeclarationStatementContext *context)
+{
+    vector<Declaration *> decs;
+    Declaration *dec = visit(context->declaration());
+    decs.push_back(dec);
+    for (const auto id : context->IDENTIFIER())
+    {
+        decs.push_back(new Declaration(dec->get_type(), id->getText()));
+    }
+    return (Statement *)new DeclarationStatement(decs);
 }
 
 antlrcpp::Any Visitor::visitDefinitionStatement(ifccParser::DefinitionStatementContext *context)
 {
-    Type *type = new Type(context->TYPE()->getText());
-    string identifier = context->IDENTIFIER()->getText();
+    Declaration *dec = visit(context->declaration());
     Expression *expr = visit(context->expression());
-    Declaration *dec = new Declaration(type, identifier);
     return (Statement *)new Definition(dec, expr);
 }
 
-antlrcpp::Any Visitor::visitExprStatement(ifccParser::ExprStatementContext *context) { return 0; }
+antlrcpp::Any Visitor::visitExprStatement(ifccParser::ExprStatementContext *context)
+{
+    Expression *expr = visit(context->expression());
+    return (Statement *)new ExpressionStatement(expr);
+}
 
 antlrcpp::Any Visitor::visitParExpr(ifccParser::ParExprContext *context)
 {
     return (Expression *)visit(context->expression());
 };
+
+antlrcpp::Any Visitor::visitVarExpr(ifccParser::VarExprContext *context)
+{
+    return (Expression *)new Var(context->IDENTIFIER()->getText());
+}
 
 antlrcpp::Any Visitor::visitAddSubExpr(ifccParser::AddSubExprContext *context)
 {

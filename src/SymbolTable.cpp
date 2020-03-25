@@ -48,3 +48,14 @@ int SymbolTable::get_cur_index()
 {
     return cur_index;
 }
+
+void SymbolTable::show()
+{
+    for (list<Symbol *> l : table)
+    {
+        for (Symbol *s : l)
+        {
+            cout << s->get_identifier() << " " << s->get_index() << endl;
+        }
+    }
+}

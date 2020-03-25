@@ -2,6 +2,7 @@
 #include "Expression.h"
 #include "CFG.h"
 #include "IRInstr.h"
+#include "SymbolTable.h"
 
 string Return::buildIR(CFG *cfg)
 {

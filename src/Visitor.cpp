@@ -107,6 +107,11 @@ antlrcpp::Any Visitor::visitAddSubExpr(ifccParser::AddSubExprContext *context)
     return (Expression *)new AddSubExpr(expr1, expr2, symb);
 };
 
+antlrcpp::Any Visitor::visitMultDivExpr(ifccParser::MultDivExprContext *context)
+{
+    return 0;
+}
+
 antlrcpp::Any Visitor::visitAssignExpr(ifccParser::AssignExprContext *context)
 {
     string identifier = context->IDENTIFIER()->getText();

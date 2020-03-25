@@ -21,6 +21,7 @@ statement:
 expression:
 	CONST										# constExpr
 	| IDENTIFIER								# varExpr
+	| expression MULT_DIV_OPERATOR expression	# multDivExpr
 	| expression ADD_SUB_OPERATOR expression	# addSubExpr
 	| '(' expression ')'						# parExpr
 	| IDENTIFIER '=' expression					# assignExpr;
@@ -35,6 +36,7 @@ fragment NONDIGIT: [a-zA-Z_];
 fragment DIGIT: [0-9];
 
 ADD_SUB_OPERATOR: '+' | '-';
+MULT_DIV_OPERATOR: '*' | '/';
 
 COMMENT: ('/*' .*? '*/' | '//' .*? '\n') -> skip;
 DIRECTIVE: '#' .*? '\n' -> skip;

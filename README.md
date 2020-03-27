@@ -36,3 +36,6 @@ Then, one part of the group focused on grammar while the other one concentrated 
 Unfortunately we made the mistake of moving the "forehead" too far forward which led us to have to review the grammar afterwards.
 
 ## Future project management
+
+- Now that a strong code foundation has been established and that the basic mechanisms and workflow are understood by all the members, the workload can be more adequately distributed.
+-Each member will henceforth be given the task of implementing a new feature and will therefore have to write the corresponding back and front codes along with the necssary tests.

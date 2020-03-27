@@ -33,5 +33,6 @@ Handles bit-to-bit operators (`AND`, `OR`, `XOR`) | []
 
 The first weeks were focused on discovering the subject and installing all the necessary components on our machines (Linux ubuntu, docker...).
 Then, one part of the group focused on grammar while the other one concentrated on the "back" trying to advance the compilation, while implementing the symbol table and the abstract syntax tree.
+Unfortunately we made the mistake of moving the "forehead" too far forward which led us to have to review the grammar afterwards.
 
 ## Future project management

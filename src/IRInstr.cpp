@@ -150,6 +150,7 @@ void DivInstr::gen_asm(ostream &o)
     }
 
     o << "\t" << mov_op << "\t" << source_1 << ", " << reg << endl;
-    o << "\t" << div_op << "\t" << source_2 << ", " << reg << endl;
+    o << "\tcltd" << endl;
+    o << "\t" << div_op << "\t" << source_2 << endl;
     o << "\t" << mov_op << "\t" << reg << ", " << destination << endl;
 }

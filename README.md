@@ -29,8 +29,9 @@ Handles basic code blocks | []
 Handles arithmetic expressions (+, -, *) | []
 Handles bit-to-bit operators (`AND`, `OR`, `XOR`) | []
 
-## Past project management
+## Past project management (before the 27/03/20)
 
 The first weeks were focused on discovering the subject and installing all the necessary components on our machines (Linux ubuntu, docker...).
+Then, one part of the group focused on grammar while the other one concentrated on the "back" trying to advance the compilation, while implementing the symbol table and the abstract syntax tree.
 
 ## Future project management

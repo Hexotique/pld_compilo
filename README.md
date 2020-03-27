@@ -31,12 +31,12 @@ Handles basic code blocks | [X]
 Handles arithmetic expressions (+, -, *, /) | [X]
 Handles bit-to-bit operators (`AND`, `OR`, `XOR`) | []
 
-## Past project management (before the 27/03/20)
+## Past project management (until 27/03/20)
 
-The first weeks were focused on discovering the subject and installing all the necessary components on our machines (Linux ubuntu, docker...).
-Then, one part of the group focused on grammar while the other one concentrated on the "back" trying to advance the compilation, while implementing the symbol table and the abstract syntax tree.
+The first weeks were focused on discovering the subject and installing all the necessary components on our individual computers (Linux ubuntu, docker...).
+Then, part of the group focused on grammar whilst the rest tackled the "back"  to advance the compilation, while implementing the symbol table and the abstract syntax tree.
 Unfortunately we made the mistake of moving the "forehead" too far forward which led us to have to review the grammar afterwards.
-We then rectified this situation by working together to finally achieve the mid-term objectives.
+We then rectified this mistake by working together to finally achieve the mid-term objectives.
 
 ## Future project management
 

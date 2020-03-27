@@ -42,7 +42,11 @@ void CFG::gen_asm(ostream &o)
 string CFG::var_to_asm(string identifier)
 {
     Symbol *s = get_symbol_table()->lookup(identifier);
-
+    if (s == nullptr)
+    {
+        cerr << "error: '" << identifier << "' undeclared" << endl;
+        exit(1);
+    }
     return to_string(-1*s->get_index()) + "(%rbp)";
 }
 

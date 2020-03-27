@@ -35,7 +35,6 @@ int main(int argn, const char **argv)
         std::cout << token->toString() << std::endl;
     }
     */
-
     ifccParser parser(&tokens);
     tree::ParseTree *tree = parser.prog();
 
@@ -46,7 +45,6 @@ int main(int argn, const char **argv)
 
     Visitor visitor;
     Program *prog = visitor.visit(tree);
-    
     vector<CFG *> cfgs = prog->buildIR();
     for (const auto cfg : cfgs)
     {

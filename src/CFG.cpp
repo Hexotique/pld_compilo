@@ -41,8 +41,12 @@ void CFG::gen_asm(ostream &o)
 
 string CFG::var_to_asm(string identifier)
 {
-    Symbol *s = get_symbol_table()->lookup(identifier);
-
+    Symbol *s = currentTable->lookup(identifier);
+    if (s == nullptr)
+    {
+        cerr << "error: '" << identifier << "' undeclared" << endl;
+        exit(1);
+    }
     return to_string(-1*s->get_index()) + "(%rbp)";
 }
 
@@ -76,7 +80,13 @@ void CFG::add_instruction(IRInstr *instr)
 
 Symbol *CFG::add_to_symbol_table(string label, Type *t)
 {
-    return get_symbol_table()->insert(label, t);
+    Symbol *s = currentTable->lookup(label);
+    if (s == nullptr)
+    {
+        return currentTable->insert(label, t);
+    }
+    cerr << "error: redeclaration of '" << label << "' variable" << endl;
+    exit(1);
 }
 
 Symbol *CFG::create_temp_var(Type *t)

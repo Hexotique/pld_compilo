@@ -13,6 +13,7 @@
 #include "DeclarationStatement.h"
 #include "ExpressionStatement.h"
 #include "Var.h"
+#include "MultDivExpr.h"
 
 antlrcpp::Any Visitor::visitProg(ifccParser::ProgContext *context)
 {
@@ -109,7 +110,10 @@ antlrcpp::Any Visitor::visitAddSubExpr(ifccParser::AddSubExprContext *context)
 
 antlrcpp::Any Visitor::visitMultDivExpr(ifccParser::MultDivExprContext *context)
 {
-    return 0;
+    string symb = context->MULT_DIV_OPERATOR()->getText();
+    Expression *expr1 = (Expression *)visit(context->expression(0));
+    Expression *expr2 = (Expression *)visit(context->expression(1));
+    return (Expression *)new MultDivExpr(expr1, expr2, symb);
 }
 
 antlrcpp::Any Visitor::visitAssignExpr(ifccParser::AssignExprContext *context)

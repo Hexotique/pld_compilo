@@ -31,6 +31,6 @@ Handles bit-to-bit operators (`AND`, `OR`, `XOR`) | []
 
 ## Past project management
 
-
+The first weeks were focused on discovering the subject and installing all the necessary components on our machines (Linux ubuntu, docker...).
 
 ## Future project management

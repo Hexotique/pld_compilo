@@ -1,6 +1,6 @@
 grammar ifcc;
 
-prog: function*;
+prog: function+;
 
 function: ( TYPE | 'void') IDENTIFIER funcParams block;
 
@@ -19,7 +19,7 @@ statement:
 	| expression ';'					# exprStatement;
 
 expression:
-	CONST										# constExpr
+	NEGATIVE? CONST								# constExpr
 	| IDENTIFIER								# varExpr
 	| expression MULT_DIV_OPERATOR expression	# multDivExpr
 	| expression ADD_SUB_OPERATOR expression	# addSubExpr
@@ -35,6 +35,7 @@ IDENTIFIER: NONDIGIT (NONDIGIT | DIGIT)*;
 fragment NONDIGIT: [a-zA-Z_];
 fragment DIGIT: [0-9];
 
+NEGATIVE: '-';
 ADD_SUB_OPERATOR: '+' | '-';
 MULT_DIV_OPERATOR: '*' | '/';
 

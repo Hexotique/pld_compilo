@@ -1,8 +1,9 @@
-/*
+int main()
+{
+    /*
 	Multi
 	Line
 	Comments
-*/
-int main() {
-	return 0;
+    */
+    return 0;
 }

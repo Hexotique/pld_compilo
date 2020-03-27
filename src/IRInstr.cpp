@@ -76,19 +76,19 @@ void AddInstr::gen_asm(ostream &o)
 void SubInstr::gen_asm(ostream &o)
 {
     string mov_op = "";
-    string add_op = "";
+    string sub_op = "";
     string reg = "";
 
     switch (t->get_size())
     {
     case 4:
         mov_op = "movl";
-        add_op = "subl";
+        sub_op = "subl";
         reg = "%eax";
         break;
     case 8:
         mov_op = "movq";
-        add_op = "subq";
+        sub_op = "subq";
         reg = "%rax";
         break;
     default:
@@ -96,6 +96,60 @@ void SubInstr::gen_asm(ostream &o)
     }
 
     o << "\t" << mov_op << "\t" << source_1 << ", " << reg << endl;
-    o << "\t" << add_op << "\t" << source_2 << ", " << reg << endl;
+    o << "\t" << sub_op << "\t" << source_2 << ", " << reg << endl;
+    o << "\t" << mov_op << "\t" << reg << ", " << destination << endl;
+}
+
+void MultInstr::gen_asm(ostream &o)
+{
+    string mov_op = "";
+    string mul_op = "";
+    string reg = "";
+
+    switch (t->get_size())
+    {
+    case 4:
+        mov_op = "movl";
+        mul_op = "imull";
+        reg = "%eax";
+        break;
+    case 8:
+        mov_op = "movq";
+        mul_op = "imulq";
+        reg = "%rax";
+        break;
+    default:
+        break;
+    }
+
+    o << "\t" << mov_op << "\t" << source_1 << ", " << reg << endl;
+    o << "\t" << mul_op << "\t" << source_2 << ", " << reg << endl;
+    o << "\t" << mov_op << "\t" << reg << ", " << destination << endl;
+}
+
+void DivInstr::gen_asm(ostream &o)
+{
+    string mov_op = "";
+    string div_op = "";
+    string reg = "";
+
+    switch (t->get_size())
+    {
+    case 4:
+        mov_op = "movl";
+        div_op = "idivl";
+        reg = "%eax";
+        break;
+    case 8:
+        mov_op = "movq";
+        div_op = "idivq";
+        reg = "%rax";
+        break;
+    default:
+        break;
+    }
+
+    o << "\t" << mov_op << "\t" << source_1 << ", " << reg << endl;
+    o << "\t" << div_op << "\t" << source_2 << ", " << reg << endl;
     o << "\t" << mov_op << "\t" << reg << ", " << destination << endl;
 }

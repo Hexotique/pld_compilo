@@ -24,10 +24,11 @@ Feature | Implemented
 Parses basic variable types (`int`) |  [X]
 Parses basic variable types (`char`) |  []
 Handles comments in code | [X]
+Static verification in code | [X]
 Handles variable declaration in the beginning of function blocks | [X]
 Handles variable initialisation during declaration | [X]
 Handles basic code blocks | [X]
-Handles arithmetic expressions (+, -, *) | [X]
+Handles arithmetic expressions (+, -, *, /) | [X]
 Handles bit-to-bit operators (`AND`, `OR`, `XOR`) | []
 
 ## Past project management (before the 27/03/20)

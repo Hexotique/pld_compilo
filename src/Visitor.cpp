@@ -125,6 +125,5 @@ antlrcpp::Any Visitor::visitAssignExpr(ifccParser::AssignExprContext *context)
 
 antlrcpp::Any Visitor::visitConstExpr(ifccParser::ConstExprContext *context)
 {
-    int factor = (context->NEGATIVE()) ? -1 : 1;
-    return (Expression *)(new Const(new Type("int"), factor * stoi(context->CONST()->getText())));
+    return (Expression *)(new Const(new Type("int"), stoi(context->CONST()->getText())));
 };

@@ -19,7 +19,7 @@ statement:
 	| expression ';'					# exprStatement;
 
 expression:
-	NEGATIVE? CONST								# constExpr
+	CONST										# constExpr
 	| IDENTIFIER								# varExpr
 	| expression MULT_DIV_OPERATOR expression	# multDivExpr
 	| expression ADD_SUB_OPERATOR expression	# addSubExpr
@@ -35,7 +35,6 @@ IDENTIFIER: NONDIGIT (NONDIGIT | DIGIT)*;
 fragment NONDIGIT: [a-zA-Z_];
 fragment DIGIT: [0-9];
 
-NEGATIVE: '-';
 ADD_SUB_OPERATOR: '+' | '-';
 MULT_DIV_OPERATOR: '*' | '/';
 

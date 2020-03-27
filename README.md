@@ -28,3 +28,9 @@ Handles variable initialisation during declaration | []
 Handles basic code blocks | []
 Handles arithmetic expressions (+, -, *) | []
 Handles bit-to-bit operators (`AND`, `OR`, `XOR`) | []
+
+## Past project management
+
+
+
+## Future project management

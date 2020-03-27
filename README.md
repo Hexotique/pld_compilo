@@ -38,4 +38,5 @@ Unfortunately we made the mistake of moving the "forehead" too far forward which
 ## Future project management
 
 - Now that a strong code foundation has been established and that the basic mechanisms and workflow are understood by all the members, the workload can be more adequately distributed.
--Each member will henceforth be given the task of implementing a new feature and will therefore have to write the corresponding back and front codes along with the necssary tests.
+
+- Each member will henceforth be given the task of implementing a new feature and will therefore have to write the corresponding back and front codes along with the necssary tests.

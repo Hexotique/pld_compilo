@@ -21,12 +21,13 @@ R C compiler with antlr4/c++
 ## Features
 Feature | Implemented
 --- | :---:
-Parses basic variable types (`char` and `int`) |  []
+Parses basic variable types (`int`) |  [X]
+Parses basic variable types (`char`) |  []
 Handles comments in code | [X]
-Handles variable declaration in the beginning of function blocks | []
-Handles variable initialisation during declaration | []
-Handles basic code blocks | []
-Handles arithmetic expressions (+, -, *) | []
+Handles variable declaration in the beginning of function blocks | [X]
+Handles variable initialisation during declaration | [X]
+Handles basic code blocks | [X]
+Handles arithmetic expressions (+, -, *) | [X]
 Handles bit-to-bit operators (`AND`, `OR`, `XOR`) | []
 
 ## Past project management (before the 27/03/20)
@@ -34,6 +35,7 @@ Handles bit-to-bit operators (`AND`, `OR`, `XOR`) | []
 The first weeks were focused on discovering the subject and installing all the necessary components on our machines (Linux ubuntu, docker...).
 Then, one part of the group focused on grammar while the other one concentrated on the "back" trying to advance the compilation, while implementing the symbol table and the abstract syntax tree.
 Unfortunately we made the mistake of moving the "forehead" too far forward which led us to have to review the grammar afterwards.
+We then rectified this situation by working together to finally achieve the mid-term objectives.
 
 ## Future project management
 

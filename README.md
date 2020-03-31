@@ -26,6 +26,7 @@ C compiler with antlr4/c++
 Feature | Implemented
 --- | :---:
 Parses `int` variable type |  X
+Parses `int64_t` variable type |
 Parses `char` variable type |
 Handles comments in code | X
 Verifies that variables are declared before use | X
@@ -40,7 +41,12 @@ Handles `int` division | X
 Handles bit-to-bit `AND` operator |
 Handles bit-to-bit `OR` operator |
 Handles bit-to-bit `XOR` operator |
-
+Handle function declaration |
+Handle function definition |
+Handle function parameters |
+Handle `if` block |
+Handle `else` block |
+Handle `else if` block |
 
 ## Past project management (until 27/03/20)
 

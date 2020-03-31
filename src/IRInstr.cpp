@@ -233,5 +233,47 @@ void XOrInstr::gen_asm(ostream &o)
 
     o << "\t" << mov_op << "\t" << source_1 << ", " << reg << endl;
     o << "\t" << xor_op << "\t" << source_2 << ", " << reg << endl;
+
     o << "\t" << mov_op << "\t" << reg << ", " << destination << endl;
+}
+
+
+void EquInstr::gen_asm(ostream &o)
+{
+
+      string mov_op = "";
+      string sup_op = "";
+      string reg = "";
+
+      switch (t->get_size())
+      {
+      case 4:
+          mov_op = "movl";
+          sup_op = "cmpl";
+          reg = "%eax";
+          break;
+      case 8:
+          mov_op = "movq";
+          sup_op = "cmpq";
+          reg = "%rax";
+          break;
+      default:
+          break;
+      }
+
+      o << "\t" << mov_op << "\t" << source_1 << ", " << reg << endl;
+      o << "\t" << sup_op << "\t" << source_2 << ", " << reg << endl;
+      o << "\t" << mov_op << "\t" << reg << ", " << destination << endl;
+}
+
+void InequInstr::gen_asm(ostream &o)
+{
+}
+
+void SupInstr::gen_asm(ostream &o)
+{
+}
+
+void InfInstr::gen_asm(ostream &o)
+{
 }

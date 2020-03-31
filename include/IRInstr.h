@@ -166,3 +166,59 @@ protected:
     string source_1;
     string source_2;
 };
+
+class SupInstr : public IRInstr
+{
+public:
+    SupInstr(Type *type, string dest, string src1, string src2)
+        : IRInstr(type), destination(dest), source_1(src1), source_2(src2) {}
+
+    void gen_asm(ostream &o);
+
+protected:
+    string destination;
+    string source_1;
+    string source_2;
+};
+
+class InfInstr : public IRInstr
+{
+public:
+    InfInstr(Type *type, string dest, string src1, string src2)
+        : IRInstr(type), destination(dest), source_1(src1), source_2(src2) {}
+
+    void gen_asm(ostream &o);
+
+protected:
+    string destination;
+    string source_1;
+    string source_2;
+};
+
+class EquInstr : public IRInstr
+{
+public:
+    EquInstr(Type *type, string dest, string src1, string src2)
+        : IRInstr(type), destination(dest), source_1(src1), source_2(src2) {}
+
+    void gen_asm(ostream &o);
+
+protected:
+    string destination;
+    string source_1;
+    string source_2;
+};
+
+class InequInstr : public IRInstr
+{
+public:
+    InequInstr(Type *type, string dest, string src1, string src2)
+        : IRInstr(type), destination(dest), source_1(src1), source_2(src2) {}
+
+    void gen_asm(ostream &o);
+
+protected:
+    string destination;
+    string source_1;
+    string source_2;
+};

@@ -43,6 +43,8 @@ public:
 
     antlrcpp::Any visitBitExpr(ifccParser::BitExprContext *context) override;
 
+    antlrcpp::Any visitCompExpr(ifccParser::CompExprContext *context) override;
+
     antlrcpp::Any visitAssignExpr(ifccParser::AssignExprContext *context) override;
 
     antlrcpp::Any visitConstExpr(ifccParser::ConstExprContext *context) override;

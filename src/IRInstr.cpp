@@ -154,3 +154,84 @@ void DivInstr::gen_asm(ostream &o)
     o << "\t" << div_op << "\t" << source_2 << endl;
     o << "\t" << mov_op << "\t" << reg << ", " << destination << endl;
 }
+
+void AndInstr::gen_asm(ostream &o)
+{
+    string mov_op = "";
+    string and_op = "";
+    string reg = "";
+
+    switch (t->get_size())
+    {
+    case 4:
+        mov_op = "movl";
+        and_op = "andl";
+        reg = "%eax";
+        break;
+    case 8:
+        mov_op = "movq";
+        and_op = "andq";
+        reg = "%rax";
+        break;
+    default:
+        break;
+    }
+
+    o << "\t" << mov_op << "\t" << source_1 << ", " << reg << endl;
+    o << "\t" << and_op << "\t" << source_2 << ", " << reg << endl;
+    o << "\t" << mov_op << "\t" << reg << ", " << destination << endl;
+}
+
+void OrInstr::gen_asm(ostream &o)
+{
+    string mov_op = "";
+    string or_op = "";
+    string reg = "";
+
+    switch (t->get_size())
+    {
+    case 4:
+        mov_op = "movl";
+        or_op = "orl";
+        reg = "%eax";
+        break;
+    case 8:
+        mov_op = "movq";
+        or_op = "orq";
+        reg = "%rax";
+        break;
+    default:
+        break;
+    }
+
+    o << "\t" << mov_op << "\t" << source_1 << ", " << reg << endl;
+    o << "\t" << or_op << "\t" << source_2 << ", " << reg << endl;
+    o << "\t" << mov_op << "\t" << reg << ", " << destination << endl;
+}
+
+void XOrInstr::gen_asm(ostream &o)
+{
+    string mov_op = "";
+    string xor_op = "";
+    string reg = "";
+
+    switch (t->get_size())
+    {
+    case 4:
+        mov_op = "movl";
+        xor_op = "xorl";
+        reg = "%eax";
+        break;
+    case 8:
+        mov_op = "movq";
+        xor_op = "xorq";
+        reg = "%rax";
+        break;
+    default:
+        break;
+    }
+
+    o << "\t" << mov_op << "\t" << source_1 << ", " << reg << endl;
+    o << "\t" << xor_op << "\t" << source_2 << ", " << reg << endl;
+    o << "\t" << mov_op << "\t" << reg << ", " << destination << endl;
+}

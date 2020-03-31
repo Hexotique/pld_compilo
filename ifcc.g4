@@ -23,6 +23,7 @@ expression:
 	| IDENTIFIER								# varExpr
 	| expression MULT_DIV_OPERATOR expression	# multDivExpr
 	| expression ADD_SUB_OPERATOR expression	# addSubExpr
+	| expression BIT_OPERATOR expression		# bitExpr
 	| '(' expression ')'						# parExpr
 	| IDENTIFIER '=' expression					# assignExpr;
 
@@ -37,6 +38,7 @@ fragment DIGIT: [0-9];
 
 ADD_SUB_OPERATOR: '+' | '-';
 MULT_DIV_OPERATOR: '*' | '/';
+BIT_OPERATOR: '^' | '&' | '|';
 
 COMMENT: ('/*' .*? '*/' | '//' .*? '\n') -> skip;
 DIRECTIVE: '#' .*? '\n' -> skip;

@@ -124,3 +124,45 @@ protected:
     string source_1;
     string source_2;
 };
+
+class AndInstr : public IRInstr
+{
+public:
+    AndInstr(Type *type, string dest, string src1, string src2)
+        : IRInstr(type), destination(dest), source_1(src1), source_2(src2) {}
+
+    void gen_asm(ostream &o);
+
+protected:
+    string destination;
+    string source_1;
+    string source_2;
+};
+
+class OrInstr : public IRInstr
+{
+public:
+    OrInstr(Type *type, string dest, string src1, string src2)
+        : IRInstr(type), destination(dest), source_1(src1), source_2(src2) {}
+
+    void gen_asm(ostream &o);
+
+protected:
+    string destination;
+    string source_1;
+    string source_2;
+};
+
+class XOrInstr : public IRInstr
+{
+public:
+    XOrInstr(Type *type, string dest, string src1, string src2)
+        : IRInstr(type), destination(dest), source_1(src1), source_2(src2) {}
+
+    void gen_asm(ostream &o);
+
+protected:
+    string destination;
+    string source_1;
+    string source_2;
+};

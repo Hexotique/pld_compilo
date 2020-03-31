@@ -8,6 +8,7 @@
 #include "Const.h"
 #include "Assignment.h"
 #include "AddSubExpr.h"
+#include "BitExpr.h"
 #include "Declaration.h"
 #include "Definition.h"
 #include "DeclarationStatement.h"
@@ -115,6 +116,16 @@ antlrcpp::Any Visitor::visitMultDivExpr(ifccParser::MultDivExprContext *context)
     Expression *expr2 = (Expression *)visit(context->expression(1));
     return (Expression *)new MultDivExpr(expr1, expr2, symb);
 }
+
+antlrcpp::Any Visitor::visitBitExpr(ifccParser::BitExprContext *context)
+{
+    string symb = context->BIT_OPERATOR()->getText();
+    Expression *expr1 = (Expression *)visit(context->expression(0));
+    Expression *expr2 = (Expression *)visit(context->expression(1));
+    return (Expression *)new BitExpr(expr1, expr2, symb);
+  //  return 0;
+}
+
 
 antlrcpp::Any Visitor::visitAssignExpr(ifccParser::AssignExprContext *context)
 {

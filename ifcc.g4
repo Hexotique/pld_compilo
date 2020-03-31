@@ -1,6 +1,6 @@
 grammar ifcc;
 
-prog: function*;
+prog: function+;
 
 function: ( TYPE | 'void') IDENTIFIER funcParams block;
 

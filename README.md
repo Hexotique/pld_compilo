@@ -1,4 +1,4 @@
-R C compiler with antlr4/c++
+C compiler with antlr4/c++
 
 ## Commands
 - `make` compiles the parser. Libraries and include directories default to the values that work in an Arch Linux environment.

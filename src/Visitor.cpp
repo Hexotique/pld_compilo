@@ -123,7 +123,6 @@ antlrcpp::Any Visitor::visitBitExpr(ifccParser::BitExprContext *context)
     Expression *expr1 = (Expression *)visit(context->expression(0));
     Expression *expr2 = (Expression *)visit(context->expression(1));
     return (Expression *)new BitExpr(expr1, expr2, symb);
-  //  return 0;
 }
 
 

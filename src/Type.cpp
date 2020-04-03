@@ -9,8 +9,13 @@ Type::Type(string type)
     }
     if (type == "char")
     {
+        size = 1;
+    }
+    if (type == "int64_t")
+    {
         size = 8;
     }
+    
 }
 
 string Type::get_label()

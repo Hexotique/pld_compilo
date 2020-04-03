@@ -1,3 +1,4 @@
+#include <cstring>
 #include "Visitor.h"
 #include "Program.h"
 #include "Function.h"
@@ -6,6 +7,7 @@
 #include "Type.h"
 #include "Return.h"
 #include "Const.h"
+#include "Character.h"
 #include "Assignment.h"
 #include "AddSubExpr.h"
 #include "BitExpr.h"
@@ -15,6 +17,7 @@
 #include "ExpressionStatement.h"
 #include "Var.h"
 #include "MultDivExpr.h"
+
 
 antlrcpp::Any Visitor::visitProg(ifccParser::ProgContext *context)
 {
@@ -105,12 +108,6 @@ antlrcpp::Any Visitor::visitParExpr(ifccParser::ParExprContext *context)
 {
     return (Expression *)visit(context->expression());
 };
-
-antlrcpp::Any Visitor::visitCharExpr(ifccParser::CharExprContext *context)
-{
-    
-}
-
 antlrcpp::Any Visitor::visitVarExpr(ifccParser::VarExprContext *context)
 {
     return (Expression *)new Var(context->IDENTIFIER()->getText());
@@ -152,3 +149,10 @@ antlrcpp::Any Visitor::visitConstExpr(ifccParser::ConstExprContext *context)
 {
     return (Expression *)(new Const(new Type("int"), stoi(context->CONST()->getText())));
 };
+
+antlrcpp::Any Visitor::visitCharAssign(ifccParser::CharAssignContext *context)
+{
+    string str = context->CHAR()->getText().erase(0,1).erase(1,1); 
+    char c = *strcpy(new char[str.length() + 1], str.c_str());
+    return (Expression *)(new Character(new Type("char"), c));
+}

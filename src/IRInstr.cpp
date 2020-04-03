@@ -11,6 +11,9 @@ void LdConstInstr::gen_asm(ostream &o)
     string operation = "";
     switch (t->get_size())
     {
+    case 1:
+        operation = "movb";
+        break; 
     case 4:
         operation = "movl";
         break;
@@ -30,6 +33,10 @@ void CopyInstr::gen_asm(ostream &o)
 
     switch (t->get_size())
     {
+    case 1:
+        operation = "movb";
+        reg = "%al";
+        break; 
     case 4:
         operation = "movl";
         reg = "%eax";

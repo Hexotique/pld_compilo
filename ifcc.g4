@@ -25,15 +25,16 @@ expression:
 	| expression ADD_SUB_OPERATOR expression	# addSubExpr
 	| expression BIT_OPERATOR expression		# bitExpr
 	| '(' expression ')'						# parExpr
-	| '\'' expression '\''						# charExpr
+	| CHAR						                # charAssign
 	| IDENTIFIER '=' expression					# assignExpr;
 
 
-TYPE: 'int' | 'char';
+TYPE: 'int' | 'char' | 'int64_t';
 RETURN: 'return';
 
 CONST: DIGIT+;
 IDENTIFIER: NONDIGIT (NONDIGIT | DIGIT)*;
+CHAR: '\'' [A-Za-z0-9] '\'';
 
 fragment NONDIGIT: [a-zA-Z_];
 fragment DIGIT: [0-9];

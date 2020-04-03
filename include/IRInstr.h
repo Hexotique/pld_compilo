@@ -222,3 +222,32 @@ protected:
     string source_1;
     string source_2;
 };
+
+class SupEquInstr : public IRInstr
+{
+public:
+    SupEquInstr(Type *type, string dest, string src1, string src2)
+        : IRInstr(type), destination(dest), source_1(src1), source_2(src2) {}
+
+    void gen_asm(ostream &o);
+
+protected:
+    string destination;
+    string source_1;
+    string source_2;
+};
+
+
+class InfEquInstr : public IRInstr
+{
+public:
+    InfEquInstr(Type *type, string dest, string src1, string src2)
+        : IRInstr(type), destination(dest), source_1(src1), source_2(src2) {}
+
+    void gen_asm(ostream &o);
+
+protected:
+    string destination;
+    string source_1;
+    string source_2;
+};

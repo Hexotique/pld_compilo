@@ -20,8 +20,14 @@ string CompExpr::buildIR(CFG *cfg)
     else if (op == ">"){
         cfg->add_instruction(new SupInstr(get_type(), dest, src1, src2));
     }
-    else {
+    else if (op == "!="){
         cfg->add_instruction(new InequInstr(get_type(), dest, src1, src2));
+    }
+    else if (op == "<="){
+        cfg->add_instruction(new InfEquInstr(get_type(), dest, src1, src2));
+    }
+    else {
+        cfg->add_instruction(new SupEquInstr(get_type(), dest, src1, src2));
     }
     return s->get_identifier();
 }

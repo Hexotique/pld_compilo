@@ -40,7 +40,7 @@ fragment DIGIT: [0-9];
 ADD_SUB_OPERATOR: '+' | '-';
 MULT_DIV_OPERATOR: '*' | '/';
 BIT_OPERATOR: '^' | '&' | '|';
-COMP_OPERATOR : '=='| '!='| '>'| '<';
+COMP_OPERATOR : '=='| '!='| '>'| '<' | '<=' | '>=' ;
 
 COMMENT: ('/*' .*? '*/' | '//' .*? '\n') -> skip;
 DIRECTIVE: '#' .*? '\n' -> skip;

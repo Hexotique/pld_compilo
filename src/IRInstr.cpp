@@ -239,7 +239,6 @@ void XOrInstr::gen_asm(ostream &o)
 
 void EquInstr::gen_asm(ostream &o)
 {
-
       string mov_op = "";
       string movzb_op = "";
       string eq_op = "";
@@ -376,6 +375,85 @@ void InfInstr::gen_asm(ostream &o)
       movzb_op = "movzbl";
       inf_op = "cmpq";
       cond_op = "setl";
+      reg = "%rax";
+      reg2 = "%al";
+      break;
+  default:
+      break;
+  }
+
+  o << "\t" << mov_op << "\t" << source_1 << ", " << reg << endl;
+  o << "\t" << inf_op << "\t" << source_2 << ", " << reg << endl;
+  o << "\t" << cond_op << "\t" << reg2 << endl;
+  o << "\t" << movzb_op << "\t" << reg2 << ", " << reg << endl;
+  o << "\t" << mov_op << "\t" << reg << ", " << destination << endl;
+
+}
+
+
+void InfEquInstr::gen_asm(ostream &o)
+{
+  string mov_op = "";
+  string movzb_op = "";
+  string inf_op = "";
+  string cond_op= "";
+  string reg = "";
+  string reg2 = "";
+
+  switch (t->get_size())
+  {
+  case 4:
+      mov_op = "movl";
+      movzb_op = "movzbl";
+      inf_op = "cmpl";
+      cond_op = "setle";
+      reg = "%eax";
+      reg2 = "%al";
+      break;
+  case 8:
+      mov_op = "movq";
+      movzb_op = "movzbl";
+      inf_op = "cmpq";
+      cond_op = "setle";
+      reg = "%rax";
+      reg2 = "%al";
+      break;
+  default:
+      break;
+  }
+
+  o << "\t" << mov_op << "\t" << source_1 << ", " << reg << endl;
+  o << "\t" << inf_op << "\t" << source_2 << ", " << reg << endl;
+  o << "\t" << cond_op << "\t" << reg2 << endl;
+  o << "\t" << movzb_op << "\t" << reg2 << ", " << reg << endl;
+  o << "\t" << mov_op << "\t" << reg << ", " << destination << endl;
+
+}
+
+void SupEquInstr::gen_asm(ostream &o)
+{
+  string mov_op = "";
+  string movzb_op = "";
+  string inf_op = "";
+  string cond_op= "";
+  string reg = "";
+  string reg2 = "";
+
+  switch (t->get_size())
+  {
+  case 4:
+      mov_op = "movl";
+      movzb_op = "movzbl";
+      inf_op = "cmpl";
+      cond_op = "setge";
+      reg = "%eax";
+      reg2 = "%al";
+      break;
+  case 8:
+      mov_op = "movq";
+      movzb_op = "movzbl";
+      inf_op = "cmpq";
+      cond_op = "setge";
       reg = "%rax";
       reg2 = "%al";
       break;

@@ -233,7 +233,6 @@ void XOrInstr::gen_asm(ostream &o)
 
     o << "\t" << mov_op << "\t" << source_1 << ", " << reg << endl;
     o << "\t" << xor_op << "\t" << source_2 << ", " << reg << endl;
-
     o << "\t" << mov_op << "\t" << reg << ", " << destination << endl;
 }
 
@@ -242,20 +241,105 @@ void EquInstr::gen_asm(ostream &o)
 {
 
       string mov_op = "";
-      string sup_op = "";
+      string movzb_op = "";
+      string eq_op = "";
+      string cond_op= "";
       string reg = "";
+      string reg2 = "";
 
       switch (t->get_size())
       {
       case 4:
           mov_op = "movl";
-          sup_op = "cmpl";
+          movzb_op = "movzbl";
+          eq_op = "cmpl";
+          cond_op = "sete";
           reg = "%eax";
+          reg2 = "%al";
           break;
       case 8:
           mov_op = "movq";
-          sup_op = "cmpq";
+          movzb_op = "movzbl";
+          eq_op = "cmpq";
+          cond_op = "sete";
           reg = "%rax";
+          reg2 = "%al";
+          break;
+      default:
+          break;
+      }
+
+      o << "\t" << mov_op << "\t" << source_1 << ", " << reg << endl;
+      o << "\t" << eq_op << "\t" << source_2 << ", " << reg << endl;
+      o << "\t" << cond_op << "\t" << reg2 << endl;
+      o << "\t" << movzb_op << "\t" << reg2 << ", " << reg << endl;
+      o << "\t" << mov_op << "\t" << reg << ", " << destination << endl;
+}
+
+void InequInstr::gen_asm(ostream &o)
+{
+      string mov_op = "";
+      string movzb_op = "";
+      string ineq_op = "";
+      string cond_op= "";
+      string reg = "";
+      string reg2 = "";
+
+      switch (t->get_size())
+      {
+      case 4:
+          mov_op = "movl";
+          movzb_op = "movzbl";
+          ineq_op = "cmpl";
+          cond_op = "setne";
+          reg = "%eax";
+          reg2 = "%al";
+          break;
+      case 8:
+          mov_op = "movq";
+          movzb_op = "movzbl";
+          ineq_op = "cmpq";
+          cond_op = "setne";
+          reg = "%rax";
+          reg2 = "%al";
+          break;
+      default:
+          break;
+      }
+
+      o << "\t" << mov_op << "\t" << source_1 << ", " << reg << endl;
+      o << "\t" << ineq_op << "\t" << source_2 << ", " << reg << endl;
+      o << "\t" << cond_op << "\t" << reg2 << endl;
+      o << "\t" << movzb_op << "\t" << reg2 << ", " << reg << endl;
+      o << "\t" << mov_op << "\t" << reg << ", " << destination << endl;
+}
+
+void SupInstr::gen_asm(ostream &o)
+{
+      string mov_op = "";
+      string movzb_op = "";
+      string sup_op = "";
+      string cond_op= "";
+      string reg = "";
+      string reg2 = "";
+
+      switch (t->get_size())
+      {
+      case 4:
+          mov_op = "movl";
+          movzb_op = "movzbl";
+          sup_op = "cmpl";
+          cond_op = "setg";
+          reg = "%eax";
+          reg2 = "%al";
+          break;
+      case 8:
+          mov_op = "movq";
+          movzb_op = "movzbl";
+          sup_op = "cmpq";
+          cond_op = "setg";
+          reg = "%rax";
+          reg2 = "%al";
           break;
       default:
           break;
@@ -263,17 +347,46 @@ void EquInstr::gen_asm(ostream &o)
 
       o << "\t" << mov_op << "\t" << source_1 << ", " << reg << endl;
       o << "\t" << sup_op << "\t" << source_2 << ", " << reg << endl;
+      o << "\t" << cond_op << "\t" << reg2 << endl;
+      o << "\t" << movzb_op << "\t" << reg2 << ", " << reg << endl;
       o << "\t" << mov_op << "\t" << reg << ", " << destination << endl;
-}
-
-void InequInstr::gen_asm(ostream &o)
-{
-}
-
-void SupInstr::gen_asm(ostream &o)
-{
 }
 
 void InfInstr::gen_asm(ostream &o)
 {
+  string mov_op = "";
+  string movzb_op = "";
+  string inf_op = "";
+  string cond_op= "";
+  string reg = "";
+  string reg2 = "";
+
+  switch (t->get_size())
+  {
+  case 4:
+      mov_op = "movl";
+      movzb_op = "movzbl";
+      inf_op = "cmpl";
+      cond_op = "setl";
+      reg = "%eax";
+      reg2 = "%al";
+      break;
+  case 8:
+      mov_op = "movq";
+      movzb_op = "movzbl";
+      inf_op = "cmpq";
+      cond_op = "setl";
+      reg = "%rax";
+      reg2 = "%al";
+      break;
+  default:
+      break;
+  }
+
+  o << "\t" << mov_op << "\t" << source_1 << ", " << reg << endl;
+  o << "\t" << inf_op << "\t" << source_2 << ", " << reg << endl;
+  o << "\t" << cond_op << "\t" << reg2 << endl;
+  o << "\t" << movzb_op << "\t" << reg2 << ", " << reg << endl;
+  o << "\t" << mov_op << "\t" << reg << ", " << destination << endl;
+
 }

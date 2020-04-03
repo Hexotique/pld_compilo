@@ -7,6 +7,10 @@ Type::Type(string type)
     {
         size = 4;
     }
+    if (type == "char")
+    {
+        size = 8;
+    }
 }
 
 string Type::get_label()

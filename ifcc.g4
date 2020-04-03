@@ -24,7 +24,9 @@ expression:
 	| expression MULT_DIV_OPERATOR expression	# multDivExpr
 	| expression ADD_SUB_OPERATOR expression	# addSubExpr
 	| '(' expression ')'						# parExpr
+	| '\'' expression '\''						# charExpr
 	| IDENTIFIER '=' expression					# assignExpr;
+
 
 TYPE: 'int' | 'char';
 RETURN: 'return';

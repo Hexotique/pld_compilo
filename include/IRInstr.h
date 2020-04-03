@@ -251,3 +251,16 @@ protected:
     string source_1;
     string source_2;
 };
+
+class NotInstr : public IRInstr
+{
+public:
+    NotInstr(Type *type, string src, string dest)
+        : IRInstr(type), source(src), destination(dest){}
+
+    void gen_asm(ostream &o);
+
+protected:
+    string source;
+    string destination;
+};

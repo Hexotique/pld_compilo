@@ -239,145 +239,121 @@ void XOrInstr::gen_asm(ostream &o)
 
 void EquInstr::gen_asm(ostream &o)
 {
-      string mov_op = "";
-      string movzb_op = "";
-      string eq_op = "";
-      string cond_op= "";
-      string reg = "";
-      string reg2 = "";
+    string mov_op = "";
+    string eq_op = "";
+    string reg = "";
+    string cond_op= "sete";
+    string movzb_op = "movzbl";
+    string reg2 = "%al";
 
-      switch (t->get_size())
-      {
-      case 4:
-          mov_op = "movl";
-          movzb_op = "movzbl";
-          eq_op = "cmpl";
-          cond_op = "sete";
-          reg = "%eax";
-          reg2 = "%al";
-          break;
-      case 8:
-          mov_op = "movq";
-          movzb_op = "movzbl";
-          eq_op = "cmpq";
-          cond_op = "sete";
-          reg = "%rax";
-          reg2 = "%al";
-          break;
-      default:
-          break;
-      }
+    switch (t->get_size())
+    {
+    case 4:
+        mov_op = "movl";
+        eq_op = "cmpl";
+        reg = "%eax";
+        break;
+    case 8:
+        mov_op = "movq";
+        eq_op = "cmpq";
+        reg = "%rax";
+        break;
+    default:
+        break;
+    }
 
-      o << "\t" << mov_op << "\t" << source_1 << ", " << reg << endl;
-      o << "\t" << eq_op << "\t" << source_2 << ", " << reg << endl;
-      o << "\t" << cond_op << "\t" << reg2 << endl;
-      o << "\t" << movzb_op << "\t" << reg2 << ", " << reg << endl;
-      o << "\t" << mov_op << "\t" << reg << ", " << destination << endl;
+    o << "\t" << mov_op << "\t" << source_1 << ", " << reg << endl;
+    o << "\t" << eq_op << "\t" << source_2 << ", " << reg << endl;
+    o << "\t" << cond_op << "\t" << reg2 << endl;
+    o << "\t" << movzb_op << "\t" << reg2 << ", " << reg << endl;
+    o << "\t" << mov_op << "\t" << reg << ", " << destination << endl;
 }
 
 void InequInstr::gen_asm(ostream &o)
 {
-      string mov_op = "";
-      string movzb_op = "";
-      string ineq_op = "";
-      string cond_op= "";
-      string reg = "";
-      string reg2 = "";
+    string mov_op = "";
+    string ineq_op = "";
+    string reg = "";
+    string cond_op= "setne";
+    string movzb_op = "movzbl";
+    string reg2 = "%al";
 
-      switch (t->get_size())
-      {
+    switch (t->get_size())
+    {
       case 4:
           mov_op = "movl";
-          movzb_op = "movzbl";
           ineq_op = "cmpl";
-          cond_op = "setne";
           reg = "%eax";
-          reg2 = "%al";
           break;
       case 8:
           mov_op = "movq";
-          movzb_op = "movzbl";
           ineq_op = "cmpq";
-          cond_op = "setne";
           reg = "%rax";
-          reg2 = "%al";
           break;
-      default:
-          break;
-      }
+    default:
+        break;
+    }
 
-      o << "\t" << mov_op << "\t" << source_1 << ", " << reg << endl;
-      o << "\t" << ineq_op << "\t" << source_2 << ", " << reg << endl;
-      o << "\t" << cond_op << "\t" << reg2 << endl;
-      o << "\t" << movzb_op << "\t" << reg2 << ", " << reg << endl;
-      o << "\t" << mov_op << "\t" << reg << ", " << destination << endl;
+    o << "\t" << mov_op << "\t" << source_1 << ", " << reg << endl;
+    o << "\t" << ineq_op << "\t" << source_2 << ", " << reg << endl;
+    o << "\t" << cond_op << "\t" << reg2 << endl;
+    o << "\t" << movzb_op << "\t" << reg2 << ", " << reg << endl;
+    o << "\t" << mov_op << "\t" << reg << ", " << destination << endl;
 }
 
 void SupInstr::gen_asm(ostream &o)
 {
-      string mov_op = "";
-      string movzb_op = "";
-      string sup_op = "";
-      string cond_op= "";
-      string reg = "";
-      string reg2 = "";
+    string mov_op = "";
+    string sup_op = "";
+    string reg = "";
+    string cond_op= "setg";
+    string movzb_op = "movzbl";
+    string reg2 = "%al";
 
-      switch (t->get_size())
-      {
+    switch (t->get_size())
+    {
       case 4:
           mov_op = "movl";
-          movzb_op = "movzbl";
           sup_op = "cmpl";
-          cond_op = "setg";
           reg = "%eax";
-          reg2 = "%al";
           break;
       case 8:
           mov_op = "movq";
-          movzb_op = "movzbl";
           sup_op = "cmpq";
-          cond_op = "setg";
           reg = "%rax";
-          reg2 = "%al";
           break;
-      default:
-          break;
-      }
+    default:
+        break;
+    }
 
-      o << "\t" << mov_op << "\t" << source_1 << ", " << reg << endl;
-      o << "\t" << sup_op << "\t" << source_2 << ", " << reg << endl;
-      o << "\t" << cond_op << "\t" << reg2 << endl;
-      o << "\t" << movzb_op << "\t" << reg2 << ", " << reg << endl;
-      o << "\t" << mov_op << "\t" << reg << ", " << destination << endl;
+    o << "\t" << mov_op << "\t" << source_1 << ", " << reg << endl;
+    o << "\t" << sup_op << "\t" << source_2 << ", " << reg << endl;
+    o << "\t" << cond_op << "\t" << reg2 << endl;
+    o << "\t" << movzb_op << "\t" << reg2 << ", " << reg << endl;
+    o << "\t" << mov_op << "\t" << reg << ", " << destination << endl;
 }
 
 void InfInstr::gen_asm(ostream &o)
 {
   string mov_op = "";
-  string movzb_op = "";
   string inf_op = "";
-  string cond_op= "";
   string reg = "";
-  string reg2 = "";
+  string cond_op= "setl";
+  string movzb_op = "movzbl";
+  string reg2 = "%al";
 
   switch (t->get_size())
   {
-  case 4:
-      mov_op = "movl";
-      movzb_op = "movzbl";
-      inf_op = "cmpl";
-      cond_op = "setl";
-      reg = "%eax";
-      reg2 = "%al";
-      break;
-  case 8:
-      mov_op = "movq";
-      movzb_op = "movzbl";
-      inf_op = "cmpq";
-      cond_op = "setl";
-      reg = "%rax";
-      reg2 = "%al";
-      break;
+    case 4:
+        mov_op = "movl";
+        inf_op = "cmpl";
+        reg = "%eax";
+        break;
+    case 8:
+        mov_op = "movq";
+        inf_op = "cmpq";
+        reg = "%rax";
+        break;
   default:
       break;
   }
@@ -394,36 +370,31 @@ void InfInstr::gen_asm(ostream &o)
 void InfEquInstr::gen_asm(ostream &o)
 {
   string mov_op = "";
-  string movzb_op = "";
-  string inf_op = "";
-  string cond_op= "";
+  string infeq_op = "";
   string reg = "";
-  string reg2 = "";
+  string cond_op= "setle";
+  string movzb_op = "movzbl";
+  string reg2 = "%al";
+
 
   switch (t->get_size())
   {
-  case 4:
-      mov_op = "movl";
-      movzb_op = "movzbl";
-      inf_op = "cmpl";
-      cond_op = "setle";
-      reg = "%eax";
-      reg2 = "%al";
-      break;
-  case 8:
-      mov_op = "movq";
-      movzb_op = "movzbl";
-      inf_op = "cmpq";
-      cond_op = "setle";
-      reg = "%rax";
-      reg2 = "%al";
-      break;
+    case 4:
+        mov_op = "movl";
+        infeq_op = "cmpl";
+        reg = "%eax";
+        break;
+    case 8:
+        mov_op = "movq";
+        infeq_op = "cmpq";
+        reg = "%rax";
+        break;
   default:
       break;
   }
 
   o << "\t" << mov_op << "\t" << source_1 << ", " << reg << endl;
-  o << "\t" << inf_op << "\t" << source_2 << ", " << reg << endl;
+  o << "\t" << infeq_op << "\t" << source_2 << ", " << reg << endl;
   o << "\t" << cond_op << "\t" << reg2 << endl;
   o << "\t" << movzb_op << "\t" << reg2 << ", " << reg << endl;
   o << "\t" << mov_op << "\t" << reg << ", " << destination << endl;
@@ -433,38 +404,64 @@ void InfEquInstr::gen_asm(ostream &o)
 void SupEquInstr::gen_asm(ostream &o)
 {
   string mov_op = "";
-  string movzb_op = "";
-  string inf_op = "";
-  string cond_op= "";
+  string supeq_op = "";
   string reg = "";
-  string reg2 = "";
+  string cond_op= "setge";
+  string movzb_op = "movzbl";
+  string reg2 = "%al";
 
   switch (t->get_size())
   {
-  case 4:
-      mov_op = "movl";
-      movzb_op = "movzbl";
-      inf_op = "cmpl";
-      cond_op = "setge";
-      reg = "%eax";
-      reg2 = "%al";
-      break;
-  case 8:
-      mov_op = "movq";
-      movzb_op = "movzbl";
-      inf_op = "cmpq";
-      cond_op = "setge";
-      reg = "%rax";
-      reg2 = "%al";
-      break;
+    case 4:
+        mov_op = "movl";
+        supeq_op = "cmpl";
+        reg = "%eax";
+        break;
+    case 8:
+        mov_op = "movq";
+        supeq_op = "cmpq";
+        reg = "%rax";
+        break;
   default:
       break;
   }
 
   o << "\t" << mov_op << "\t" << source_1 << ", " << reg << endl;
-  o << "\t" << inf_op << "\t" << source_2 << ", " << reg << endl;
+  o << "\t" << supeq_op << "\t" << source_2 << ", " << reg << endl;
   o << "\t" << cond_op << "\t" << reg2 << endl;
   o << "\t" << movzb_op << "\t" << reg2 << ", " << reg << endl;
   o << "\t" << mov_op << "\t" << reg << ", " << destination << endl;
 
+}
+
+void NotInstr::gen_asm(ostream &o)
+{
+    string mov_op = "";
+    string not_op = "";
+    string reg = "";
+    string cond_op= "sete";
+    string movzb_op = "movzbl";
+    string reg2 = "%al";
+    string value ="$0";
+
+    switch (t->get_size())
+    {
+      case 4:
+          mov_op = "movl";
+          not_op = "cmpl";
+          reg = "%eax";
+          break;
+      case 8:
+          mov_op = "movq";
+          not_op = "cmpq";
+          reg = "%rax";
+          break;
+    default:
+        break;
+      }
+
+    o << "\t" << not_op << "\t" << value << ", " << source << endl;
+    o << "\t" << cond_op << "\t" << reg2 << endl;
+    o << "\t" << movzb_op << "\t" << reg2 << ", " << reg << endl;
+    o << "\t" << mov_op << "\t" << reg << ", " << destination << endl;
 }

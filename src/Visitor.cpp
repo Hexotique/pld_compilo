@@ -10,6 +10,7 @@
 #include "AddSubExpr.h"
 #include "BitExpr.h"
 #include "CompExpr.h"
+#include "NotExpr.h"
 #include "Declaration.h"
 #include "Definition.h"
 #include "DeclarationStatement.h"
@@ -101,6 +102,12 @@ antlrcpp::Any Visitor::visitVarExpr(ifccParser::VarExprContext *context)
 {
     return (Expression *)new Var(context->IDENTIFIER()->getText());
 }
+
+antlrcpp::Any Visitor::visitNotExpr(ifccParser::NotExprContext *context)
+{
+    Expression *expr= (Expression *)visit(context->expression());
+    return (Expression *)new NotExpr(expr);
+};
 
 antlrcpp::Any Visitor::visitAddSubExpr(ifccParser::AddSubExprContext *context)
 {

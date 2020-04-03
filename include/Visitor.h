@@ -35,6 +35,8 @@ public:
 
     antlrcpp::Any visitParExpr(ifccParser::ParExprContext *context) override;
 
+    antlrcpp::Any visitNotExpr(ifccParser::NotExprContext *context) override;
+
     antlrcpp::Any visitVarExpr(ifccParser::VarExprContext *context) override;
 
     antlrcpp::Any visitAddSubExpr(ifccParser::AddSubExprContext *context) override;

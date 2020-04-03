@@ -14,19 +14,20 @@ block: '{' statement* '}';
 
 statement:
 	RETURN expression? ';'				# returnStatement
-	| declaration (',' IDENTIFIER)* ';'	# declarationStatement
-	| declaration '=' expression ';'	# definitionStatement
-	| expression ';'					# exprStatement;
+	| declaration (',' IDENTIFIER)* ';'		# declarationStatement
+	| declaration '=' expression ';'		# definitionStatement
+	| expression ';'				# exprStatement;
 
 expression:
-	CONST										# constExpr
-	| IDENTIFIER								# varExpr
+	CONST						# constExpr
+	| IDENTIFIER					# varExpr
+	| '!'expression 				# notExpr
 	| expression MULT_DIV_OPERATOR expression	# multDivExpr
 	| expression ADD_SUB_OPERATOR expression	# addSubExpr
 	| expression BIT_OPERATOR expression		# bitExpr
 	| expression COMP_OPERATOR expression		# compExpr
-	| '(' expression ')'						# parExpr
-	| IDENTIFIER '=' expression					# assignExpr;
+	| '(' expression ')'				# parExpr
+	| IDENTIFIER '=' expression			# assignExpr;
 
 TYPE: 'int' | 'char';
 RETURN: 'return';

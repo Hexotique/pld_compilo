@@ -4,7 +4,7 @@ int main()
     int b=1<2;
     int c=(a==b)<a;
     int d=a==(b>a);
-    d=d!=c
+    d=(d!=c);
     return d;
 }
 

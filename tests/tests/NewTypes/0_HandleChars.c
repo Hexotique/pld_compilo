@@ -1,4 +1,7 @@
 int main() {
-    char a = 'o';
+    char a = 'c';
+    char b = 'd';
+    a = a+b;
+    a = a-b;
     return a;
 }

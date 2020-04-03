@@ -61,6 +61,11 @@ void AddInstr::gen_asm(ostream &o)
 
     switch (t->get_size())
     {
+    case 1:
+        mov_op = "movb";
+        add_op = "addb";
+        reg = "%al";
+        break;  
     case 4:
         mov_op = "movl";
         add_op = "addl";
@@ -88,6 +93,11 @@ void SubInstr::gen_asm(ostream &o)
 
     switch (t->get_size())
     {
+    case 1:
+        mov_op = "movb";
+        sub_op = "subb";
+        reg = "%al";
+        break; 
     case 4:
         mov_op = "movl";
         sub_op = "subl";

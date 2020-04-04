@@ -25,7 +25,7 @@ expression:
 	| expression ADD_SUB_OPERATOR expression	# addSubExpr
 	| expression BIT_OPERATOR expression		# bitExpr
 	| '(' expression ')'						# parExpr
-	| CHAR						                # charAssign
+	| CHAR						                # charExpr
 	| IDENTIFIER '=' expression					# assignExpr;
 
 
@@ -34,10 +34,11 @@ RETURN: 'return';
 
 CONST: DIGIT+;
 IDENTIFIER: NONDIGIT (NONDIGIT | DIGIT)*;
-CHAR: '\'' [A-Za-z0-9] '\'';
+CHAR: '\'' (~['\\\r\n] | '\\' ESCCHAR) '\'';
 
 fragment NONDIGIT: [a-zA-Z_];
 fragment DIGIT: [0-9];
+fragment ESCCHAR: ['"?abefnrtv\\];
 
 ADD_SUB_OPERATOR: '+' | '-';
 MULT_DIV_OPERATOR: '*' | '/';

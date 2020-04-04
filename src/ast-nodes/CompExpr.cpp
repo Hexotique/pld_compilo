@@ -9,25 +9,32 @@ string CompExpr::buildIR(CFG *cfg)
     string dest = cfg->var_to_asm(s->get_identifier());
     string src1 = cfg->var_to_asm(leftExpr->buildIR(cfg));
     string src2 = cfg->var_to_asm(rightExpr->buildIR(cfg));
+    string comparison = "";
 
     if (op == "==")
     {
-        cfg->add_instruction(new EquInstr(get_type(), dest, src1, src2));
+        comparison = "e";
     }
-    else if (op == "<"){
-        cfg->add_instruction(new InfInstr(get_type(), dest, src1, src2));
+    else if (op == "<")
+    {
+        comparison = "l";
     }
-    else if (op == ">"){
-        cfg->add_instruction(new SupInstr(get_type(), dest, src1, src2));
+    else if (op == ">")
+    {
+        comparison = "g";
     }
-    else if (op == "!="){
-        cfg->add_instruction(new InequInstr(get_type(), dest, src1, src2));
+    else if (op == "!=")
+    {
+        comparison = "ne";
     }
-    else if (op == "<="){
-        cfg->add_instruction(new InfEquInstr(get_type(), dest, src1, src2));
+    else if (op == "<=")
+    {
+        comparison = "le";
     }
-    else {
-        cfg->add_instruction(new SupEquInstr(get_type(), dest, src1, src2));
+    else if (op == ">=")
+    {
+        comparison = "ge";
     }
+    cfg->add_instruction(new CmpInstr(get_type(), dest, src1, src2, comparison));
     return s->get_identifier();
 }

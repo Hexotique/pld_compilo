@@ -167,11 +167,11 @@ protected:
     string source_2;
 };
 
-class SupInstr : public IRInstr
+class CmpInstr : public IRInstr
 {
 public:
-    SupInstr(Type *type, string dest, string src1, string src2)
-        : IRInstr(type), destination(dest), source_1(src1), source_2(src2) {}
+    CmpInstr(Type *type, string dest, string src1, string src2, string comp)
+        : IRInstr(type), destination(dest), source_1(src1), source_2(src2), comparison(comp) {}
 
     void gen_asm(ostream &o);
 
@@ -179,88 +179,5 @@ protected:
     string destination;
     string source_1;
     string source_2;
-};
-
-class InfInstr : public IRInstr
-{
-public:
-    InfInstr(Type *type, string dest, string src1, string src2)
-        : IRInstr(type), destination(dest), source_1(src1), source_2(src2) {}
-
-    void gen_asm(ostream &o);
-
-protected:
-    string destination;
-    string source_1;
-    string source_2;
-};
-
-class EquInstr : public IRInstr
-{
-public:
-    EquInstr(Type *type, string dest, string src1, string src2)
-        : IRInstr(type), destination(dest), source_1(src1), source_2(src2) {}
-
-    void gen_asm(ostream &o);
-
-protected:
-    string destination;
-    string source_1;
-    string source_2;
-};
-
-class InequInstr : public IRInstr
-{
-public:
-    InequInstr(Type *type, string dest, string src1, string src2)
-        : IRInstr(type), destination(dest), source_1(src1), source_2(src2) {}
-
-    void gen_asm(ostream &o);
-
-protected:
-    string destination;
-    string source_1;
-    string source_2;
-};
-
-class SupEquInstr : public IRInstr
-{
-public:
-    SupEquInstr(Type *type, string dest, string src1, string src2)
-        : IRInstr(type), destination(dest), source_1(src1), source_2(src2) {}
-
-    void gen_asm(ostream &o);
-
-protected:
-    string destination;
-    string source_1;
-    string source_2;
-};
-
-
-class InfEquInstr : public IRInstr
-{
-public:
-    InfEquInstr(Type *type, string dest, string src1, string src2)
-        : IRInstr(type), destination(dest), source_1(src1), source_2(src2) {}
-
-    void gen_asm(ostream &o);
-
-protected:
-    string destination;
-    string source_1;
-    string source_2;
-};
-
-class NotInstr : public IRInstr
-{
-public:
-    NotInstr(Type *type, string src, string dest)
-        : IRInstr(type), source(src), destination(dest){}
-
-    void gen_asm(ostream &o);
-
-protected:
-    string source;
-    string destination;
+    string comparison;
 };

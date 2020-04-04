@@ -1,7 +1,6 @@
 int main()
 {
-int a=3;
-int b=!(a);
-return b;
+    int a = 3;
+    int b = !(a);
+    return b;
 }
-

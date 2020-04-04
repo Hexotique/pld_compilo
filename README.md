@@ -38,15 +38,21 @@ Handles `int` addition | X
 Handles `int` substraction | X
 Handles `int` multiplication | X
 Handles `int` division | X
-Handles bit-to-bit `AND` operator |
-Handles bit-to-bit `OR` operator |
-Handles bit-to-bit `XOR` operator |
-Handle function declaration |
-Handle function definition |
-Handle function parameters |
-Handle `if` block |
-Handle `else` block |
-Handle `else if` block |
+Handles bit-to-bit `AND` operator | X
+Handles bit-to-bit `OR` operator | X
+Handles bit-to-bit `XOR` operator | X
+Handles `==` comparison operator | X
+Handles `!=` comparison operator | X
+Handles `<` and `<=` comparison operator | X
+Handles `>` and `>=` comparison operator | X
+Handles unary `!` operator | X
+Handles nested blocks with different contexts | X
+Handles function declaration |
+Handles function definition |
+Handles function parameters |
+Handles `if` block |
+Handles `else` block |
+Handles `else if` block |
 
 ## Past project management (until 27/03/20)
 

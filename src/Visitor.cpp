@@ -17,6 +17,7 @@
 #include "ExpressionStatement.h"
 #include "Var.h"
 #include "MultDivExpr.h"
+#include "BlockStatement.h"
 
 antlrcpp::Any Visitor::visitProg(ifccParser::ProgContext *context)
 {
@@ -85,6 +86,12 @@ antlrcpp::Any Visitor::visitDefinitionStatement(ifccParser::DefinitionStatementC
     Declaration *dec = visit(context->declaration());
     Expression *expr = visit(context->expression());
     return (Statement *)new Definition(dec, expr);
+}
+
+antlrcpp::Any Visitor::visitBlockStatement(ifccParser::BlockStatementContext *context)
+{
+    Block *block = visit(context->block());
+    return (Statement *)new BlockStatement(block);
 }
 
 antlrcpp::Any Visitor::visitExprStatement(ifccParser::ExprStatementContext *context)

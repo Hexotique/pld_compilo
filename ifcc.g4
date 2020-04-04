@@ -14,9 +14,10 @@ block: '{' statement* '}';
 
 statement:
 	RETURN expression? ';'				# returnStatement
-	| declaration (',' IDENTIFIER)* ';'		# declarationStatement
-	| declaration '=' expression ';'		# definitionStatement
-	| expression ';'				# exprStatement;
+	| declaration (',' IDENTIFIER)* ';'	# declarationStatement
+	| declaration '=' expression ';'	# definitionStatement
+  | block                             # blockStatement
+	| expression ';'					# exprStatement;
 
 expression:
 	CONST						# constExpr

@@ -10,7 +10,7 @@ public:
     Var(string id)
         : identifier(id) {}
 
-    string buildIR(CFG * cfg);
+    string buildIR(CFG *cfg);
 
 protected:
     string identifier;

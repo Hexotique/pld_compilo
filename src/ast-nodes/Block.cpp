@@ -15,6 +15,5 @@ string Block::buildIR(CFG *cfg)
         s->buildIR(cfg);
     }
     cfg->exit_scope();
-
     return "";
 }

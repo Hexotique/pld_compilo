@@ -16,6 +16,7 @@ statement:
 	RETURN expression? ';'				# returnStatement
 	| declaration (',' IDENTIFIER)* ';'	# declarationStatement
 	| declaration '=' expression ';'	# definitionStatement
+    | block                             # blockStatement
 	| expression ';'					# exprStatement;
 
 expression:

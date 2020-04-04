@@ -1,8 +1,7 @@
 #include <iostream>
 #include <string>
-#include <list>
-
-#define TABLE_SIZE 100
+#include <vector>
+#include <map>
 
 using namespace std;
 
@@ -12,29 +11,23 @@ class Type;
 class SymbolTable
 {
 public:
-    SymbolTable()
-        : cur_nesting_level(0){};
-
-    void enter_scope();
-
-    void exit_scope();
+    SymbolTable();
 
     Symbol *insert(string label, Type *type);
 
     Symbol *lookup(string id);
+
+    Symbol *local_lookup(string id);
+
+    void enter_scope();
+
+    void exit_scope();
 
     int get_cur_index();
 
     void show();
 
 protected:
-    unsigned int cur_nesting_level;
-    string cur_scope_name;
-
     int cur_index;
-
-    list<Symbol *> table[TABLE_SIZE];
-
-private:
-    int hashf(string id);
+    vector<map<string, Symbol *>> st;
 };

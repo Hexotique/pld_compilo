@@ -2,46 +2,55 @@
 #include "Symbol.h"
 #include "Type.h"
 
-void SymbolTable::enter_scope()
+SymbolTable::SymbolTable()
+    : cur_index(0)
 {
-    cur_nesting_level++;
-}
-
-void SymbolTable::exit_scope()
-{
-    cur_nesting_level--;
+    st.push_back(map<string, Symbol *>());
 }
 
 Symbol *SymbolTable::insert(string label, Type *type)
 {
+    if (local_lookup(label) != nullptr)
+    {
+        cerr << "error: redeclaration of '" << label << "' variable" << endl;
+        exit(1);
+    }
     cur_index += type->get_size();
     Symbol *s = new Symbol(type, label, cur_index);
-    int index = hashf(s->identifier);
-    table[index].push_front(s);
+    st.back().insert(make_pair(s->get_identifier(), s));
     return s;
 }
 
 Symbol *SymbolTable::lookup(string id)
 {
-    int index = hashf(id);
-    for (const auto s : table[index])
+    for (auto it = st.rbegin(); it != st.rend(); it++)
     {
-        if (s->identifier == id)
+        if ((*it).count(id))
         {
-            return s;
+            return (*it)[id];
         }
     }
     return nullptr;
 }
 
-int SymbolTable::hashf(string id)
+Symbol *SymbolTable::local_lookup(string id)
 {
-    int sum = 0;
-    for (int i = 0; i < id.length(); i++)
+    map<string, Symbol *> cur_map = st.back();
+    if (cur_map.count(id))
     {
-        sum += id[i];
+        return cur_map[id];
     }
-    return sum % TABLE_SIZE;
+    return nullptr;
+}
+
+void SymbolTable::enter_scope()
+{
+    st.push_back(map<string, Symbol *>());
+}
+
+void SymbolTable::exit_scope()
+{
+    st.pop_back();
 }
 
 int SymbolTable::get_cur_index()
@@ -51,11 +60,12 @@ int SymbolTable::get_cur_index()
 
 void SymbolTable::show()
 {
-    for (list<Symbol *> l : table)
+    for (auto cur_map : st)
     {
-        for (Symbol *s : l)
+        for (auto &x : cur_map)
         {
-            cout << s->get_identifier() << " " << s->get_index() << endl;
+            cout << x.first << " " << x.second->get_index() << endl;
         }
+        cout << "===" << endl;
     }
 }

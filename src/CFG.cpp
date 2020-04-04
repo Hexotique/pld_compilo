@@ -7,13 +7,11 @@
 #include "IRInstr.h"
 
 CFG::CFG(Function *f)
-    : ast(f)
+    : ast(f), tmp_var_count(0)
 {
     BasicBlock *bb = new BasicBlock(this, f->getFctName());
     add_basic_block(bb);
-
-    SymbolTable *st = new SymbolTable();
-    currentTable = st;
+    symTab = new SymbolTable();
 }
 
 BasicBlock *CFG::get_current_block()
@@ -39,23 +37,10 @@ void CFG::gen_asm(ostream &o)
     }
 }
 
-string CFG::var_to_asm(string identifier)
-{
-    Symbol *s = currentTable->lookup(identifier);
-    if (s == nullptr)
-    {
-        cerr << "error: '" << identifier << "' undeclared" << endl;
-        exit(1);
-    }
-    return to_string(-1*s->get_index()) + "(%rbp)";
-}
-
 void CFG::gen_asm_prologue(ostream &o)
 {
     o << "\tpushq\t%rbp" << endl;
     o << "\tmovq\t%rsp,\t%rbp" << endl;
-
-    // for allocation of variables, pointers relative to base pointer
 }
 
 void CFG::gen_asm_epilogue(ostream &o)
@@ -66,13 +51,15 @@ void CFG::gen_asm_epilogue(ostream &o)
 
 void CFG::enter_scope()
 {
+    symTab->enter_scope();
 }
 
 void CFG::exit_scope()
 {
+    symTab->exit_scope();
 }
 
-void CFG::add_instruction(IRInstr *instr) 
+void CFG::add_instruction(IRInstr *instr)
 {
     instr->set_block(currentBlock);
     currentBlock->add_IRInstr(instr);
@@ -80,24 +67,29 @@ void CFG::add_instruction(IRInstr *instr)
 
 Symbol *CFG::add_to_symbol_table(string label, Type *t)
 {
-    Symbol *s = currentTable->lookup(label);
-    if (s == nullptr)
+    Symbol *s = symTab->local_lookup(label);
+    if (s != nullptr)
     {
-        return currentTable->insert(label, t);
+        cerr << "error: redeclaration of '" << label << "' variable" << endl;
+        exit(1);
     }
-    cerr << "error: redeclaration of '" << label << "' variable" << endl;
-    exit(1);
+    return symTab->insert(label, t);
 }
 
 Symbol *CFG::create_temp_var(Type *t)
 {
-    int next_index = get_symbol_table()->get_cur_index();
-    string label = "!tmp" + to_string(next_index + t->get_size());
+    string label = "!tmp" + to_string(tmp_var_count++ + t->get_size());
     return add_to_symbol_table(label, t);
 }
 
-SymbolTable *CFG::get_symbol_table()
+string CFG::var_to_asm(string identifier)
 {
-    return currentTable;
+    Symbol *s = symTab->lookup(identifier);
+    if (s == nullptr)
+    {
+        cerr << "error: '" << identifier << "' undeclared" << endl;
+        exit(1);
+    }
+    return to_string(-1 * s->get_index()) + "(%rbp)";
 }
 

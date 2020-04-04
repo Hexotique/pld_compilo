@@ -3,6 +3,8 @@
 #include "ASTNode.h"
 #include "Type.h"
 
+class Symbol;
+
 class Expression : public ASTNode
 {
 public:

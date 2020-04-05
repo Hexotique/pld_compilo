@@ -4,14 +4,14 @@
 
 using namespace std;
 
-class Const : public Expression
+class Character : public Expression
 {
 public:
-Const(Type *type, int c)
+    Character(Type *type, char c)
         : Expression(type), value(c) {}
 
     string buildIR(CFG *cfg);
 
 protected:
-    int value;
+    char value;
 };

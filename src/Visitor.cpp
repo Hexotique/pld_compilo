@@ -1,3 +1,4 @@
+#include <cstring>
 #include "Visitor.h"
 #include "Program.h"
 #include "Function.h"
@@ -6,6 +7,7 @@
 #include "Type.h"
 #include "Return.h"
 #include "Const.h"
+#include "Character.h"
 #include "Assignment.h"
 #include "AddSubExpr.h"
 #include "BitExpr.h"
@@ -36,6 +38,7 @@ antlrcpp::Any Visitor::visitFunction(ifccParser::FunctionContext *context)
     string rt = context->TYPE()->getText();
 
     Type *retType = new Type(rt);
+
     Block *block = (Block *)visit(context->block());
     return new Function(fname, retType, block);
 }
@@ -66,7 +69,7 @@ antlrcpp::Any Visitor::visitBlock(ifccParser::BlockContext *context)
 antlrcpp::Any Visitor::visitReturnStatement(ifccParser::ReturnStatementContext *context)
 {
     Expression *expr = visit(context->expression());
-    return (Statement *)new Return(new Type("int"), expr);
+    return (Statement *)new Return(expr->get_type(), expr);
 }
 
 antlrcpp::Any Visitor::visitDeclarationStatement(ifccParser::DeclarationStatementContext *context)
@@ -104,7 +107,6 @@ antlrcpp::Any Visitor::visitParExpr(ifccParser::ParExprContext *context)
 {
     return (Expression *)visit(context->expression());
 };
-
 antlrcpp::Any Visitor::visitVarExpr(ifccParser::VarExprContext *context)
 {
     return (Expression *)new Var(context->IDENTIFIER()->getText());
@@ -159,3 +161,50 @@ antlrcpp::Any Visitor::visitConstExpr(ifccParser::ConstExprContext *context)
 {
     return (Expression *)(new Const(new Type("int"), stoi(context->CONST()->getText())));
 };
+
+antlrcpp::Any Visitor::visitCharExpr(ifccParser::CharExprContext *context)
+{
+    string str = context->CHAR()->getText();
+    char c;
+    if (str.at(1) == '\\')
+    {
+        switch (str.at(2))
+        {
+        case '\'':
+        case '\"':
+        case '\?':
+        case '\\':
+            c = str.at(2);
+            break;
+        case 'a':
+            c = '\a';
+            break;
+        case 'b':
+            c = '\b';
+            break;
+        case 'e':
+            c = '\e';
+            break;
+        case 'f':
+            c = '\f';
+            break;
+        case 'n':
+            c = '\n';
+            break;
+        case 'r':
+            c = '\r';
+            break;
+        case 't':
+            c = '\t';
+            break;
+        case 'v':
+            c = '\v';
+            break;
+        }
+    }
+    else
+    {
+        c = str.at(1);
+    }
+    return (Expression *)(new Character(new Type("char"), c));
+}

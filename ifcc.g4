@@ -22,6 +22,7 @@ statement:
 expression:
 	CONST										# constExpr
 	| IDENTIFIER								# varExpr
+	| CHAR						                # charExpr
 	| '!' expression							# notExpr
 	| expression MULT_DIV_OPERATOR expression	# multDivExpr
 	| expression ADD_SUB_OPERATOR expression	# addSubExpr
@@ -30,14 +31,17 @@ expression:
 	| '(' expression ')'						# parExpr
 	| IDENTIFIER '=' expression					# assignExpr;
 
-TYPE: 'int' | 'char';
+
+TYPE: 'int' | 'char' | 'int64_t';
 RETURN: 'return';
 
 CONST: DIGIT+;
 IDENTIFIER: NONDIGIT (NONDIGIT | DIGIT)*;
+CHAR: '\'' (~['\\\r\n] | '\\' ESCCHAR) '\'';
 
 fragment NONDIGIT: [a-zA-Z_];
 fragment DIGIT: [0-9];
+fragment ESCCHAR: ['"?abefnrtv\\];
 
 ADD_SUB_OPERATOR: '+' | '-';
 MULT_DIV_OPERATOR: '*' | '/';

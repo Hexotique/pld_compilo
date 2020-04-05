@@ -11,11 +11,13 @@ declaration: TYPE IDENTIFIER;
 block: '{' statement* '}';
 
 statement:
-	RETURN expression? ';'				# returnStatement
-	| declaration (',' IDENTIFIER)* ';'	# declarationStatement
-	| declaration '=' expression ';'	# definitionStatement
-	| block								# blockStatement
-	| expression ';'					# exprStatement;
+	RETURN expression? ';'													# returnStatement
+	| declaration (',' IDENTIFIER)* ';'										# declarationStatement
+	| declaration '=' expression ';'										# definitionStatement
+	| block																	# blockStatement
+	| 'for' '(' expression? ';' expression? ';' expression? ')' statement	# forStatement
+	| 'while' '(' expression? ')' statement									# whileStatement
+	| expression ';'														# exprStatement;
 
 expression:
 	CONST													# constExpr

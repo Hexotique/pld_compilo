@@ -105,6 +105,16 @@ antlrcpp::Any Visitor::visitBlockStatement(ifccParser::BlockStatementContext *co
     return (Statement *)new BlockStatement(block);
 }
 
+antlrcpp::Any Visitor::visitForStatement(ifccParser::ForStatementContext *context)
+{
+    return 0;
+}
+
+antlrcpp::Any Visitor::visitWhileStatement(ifccParser::WhileStatementContext *context)
+{
+    return 0;
+}
+
 antlrcpp::Any Visitor::visitExprStatement(ifccParser::ExprStatementContext *context)
 {
     Expression *expr = visit(context->expression());

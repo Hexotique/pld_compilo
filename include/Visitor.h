@@ -31,6 +31,10 @@ public:
 
     antlrcpp::Any visitBlockStatement(ifccParser::BlockStatementContext *context) override;
 
+    antlrcpp::Any visitForStatement(ifccParser::ForStatementContext *context) override;
+
+    antlrcpp::Any visitWhileStatement(ifccParser::WhileStatementContext *context) override;
+
     antlrcpp::Any visitExprStatement(ifccParser::ExprStatementContext *context) override;
 
     antlrcpp::Any visitParExpr(ifccParser::ParExprContext *context) override;

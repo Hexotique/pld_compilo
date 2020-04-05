@@ -2,6 +2,11 @@
 #include "CFG.h"
 #include "IRInstr.h"
 
+CFG *BasicBlock::get_cfg()
+{
+    return cfg;
+}
+
 void BasicBlock::add_IRInstr(IRInstr *instr)
 {
     instrs.push_back(instr);

@@ -17,7 +17,7 @@ vector<CFG *> Program::buildIR()
     vector<CFG *> cfgs;
     for (Function *f : fcts)
     {
-        CFG *cfg = new CFG(f);
+        CFG *cfg = new CFG(f, map<string, Symbol *>());
         f->buildIR(cfg);
         cfgs.push_back(cfg);
     }

@@ -9,11 +9,9 @@ void Block::addStatement(Statement *s)
 
 string Block::buildIR(CFG *cfg)
 {
-    cfg->enter_scope();
     for (Statement *s : statements)
     {
         s->buildIR(cfg);
     }
-    cfg->exit_scope();
     return "";
 }

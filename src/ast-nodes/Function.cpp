@@ -1,10 +1,11 @@
 #include "Function.h"
-#include "Param.h"
+#include "CFG.h"
+#include "Declaration.h"
 #include "Block.h"
 
 string Function::buildIR(CFG *cfg)
 {
-    for (Param *param : fctParams)
+    for (Declaration *param : fctParams)
     {
         param->buildIR(cfg);
     }
@@ -15,4 +16,9 @@ string Function::buildIR(CFG *cfg)
 string Function::getFctName()
 {
     return fctName;
+}
+
+vector<Declaration *> Function::getParams()
+{
+    return fctParams;
 }

@@ -20,6 +20,7 @@
 #include "Var.h"
 #include "MultDivExpr.h"
 #include "BlockStatement.h"
+#include "FuncExpr.h"
 
 antlrcpp::Any Visitor::visitProg(ifccParser::ProgContext *context)
 {
@@ -36,16 +37,23 @@ antlrcpp::Any Visitor::visitFunction(ifccParser::FunctionContext *context)
 {
     string fname = context->IDENTIFIER()->getText();
     string rt = context->TYPE()->getText();
+    vector<Declaration *> fparams = visit(context->funcParams());
 
     Type *retType = new Type(rt);
 
     Block *block = (Block *)visit(context->block());
-    return new Function(fname, retType, block);
+    return new Function(fname, retType, block, fparams);
 }
 
-antlrcpp::Any Visitor::visitFuncParams(ifccParser::FuncParamsContext *context) { return 0; }
-
-antlrcpp::Any Visitor::visitParamList(ifccParser::ParamListContext *context) { return 0; }
+antlrcpp::Any Visitor::visitFuncParams(ifccParser::FuncParamsContext *context)
+{
+    vector<Declaration *> fparams;
+    for (const auto param : context->declaration())
+    {
+        fparams.push_back(visit(param));
+    }
+    return fparams;
+}
 
 antlrcpp::Any Visitor::visitDeclaration(ifccParser::DeclarationContext *context)
 {
@@ -114,9 +122,20 @@ antlrcpp::Any Visitor::visitVarExpr(ifccParser::VarExprContext *context)
 
 antlrcpp::Any Visitor::visitNotExpr(ifccParser::NotExprContext *context)
 {
-    Expression *expr= (Expression *)visit(context->expression());
+    Expression *expr = (Expression *)visit(context->expression());
     return (Expression *)new NotExpr(expr);
 };
+
+antlrcpp::Any Visitor::visitFuncExpr(ifccParser::FuncExprContext *context)
+{
+    string funcLabel = context->IDENTIFIER()->getText();
+    vector<Expression *> params;
+    for (const auto expr : context->expression())
+    {
+        params.push_back(visit(expr));
+    }
+    return (Expression *)new FuncExpr(funcLabel, params);
+}
 
 antlrcpp::Any Visitor::visitAddSubExpr(ifccParser::AddSubExprContext *context)
 {
@@ -159,7 +178,12 @@ antlrcpp::Any Visitor::visitAssignExpr(ifccParser::AssignExprContext *context)
 
 antlrcpp::Any Visitor::visitConstExpr(ifccParser::ConstExprContext *context)
 {
-    return (Expression *)(new Const(new Type("int"), stoi(context->CONST()->getText())));
+    long long value = strtoll(context->CONST()->getText().c_str(), NULL, 10);
+    if (value > 2147483647)
+    {
+        return (Expression *)(new Const(new Type("int64"), value));
+    }
+    return (Expression *)(new Const(new Type("int"), value));
 };
 
 antlrcpp::Any Visitor::visitCharExpr(ifccParser::CharExprContext *context)

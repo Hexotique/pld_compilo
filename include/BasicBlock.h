@@ -42,6 +42,8 @@ public:
     BasicBlock(CFG *c, string entry_label, BasicBlock *et = nullptr, BasicBlock *ef = nullptr)
         : cfg(c), label(entry_label.insert(0, ".")), exit_true(et), exit_false(ef){};
 
+    CFG *get_cfg();
+
     void gen_asm(ostream &o);
 
     void add_IRInstr(IRInstr *instr);

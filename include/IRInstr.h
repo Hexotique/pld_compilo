@@ -181,3 +181,17 @@ protected:
     string source_2;
     string comparison;
 };
+
+class CallInstr : public IRInstr
+{
+public:
+    CallInstr(Type *type, string fn, string d, vector<string> ps)
+        : IRInstr(type), fname(fn), dest(d), param_src(ps) {}
+
+    void gen_asm(ostream &o);
+
+protected:
+    string fname;
+    string dest;
+    vector<string> param_src;
+};

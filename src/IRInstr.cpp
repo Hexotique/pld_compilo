@@ -1,4 +1,6 @@
 #include "IRInstr.h"
+#include "BasicBlock.h"
+#include "CFG.h"
 #include "Type.h"
 
 void IRInstr::set_block(BasicBlock *block)
@@ -13,7 +15,7 @@ void LdConstInstr::gen_asm(ostream &o)
     {
     case 1:
         operation = "movb";
-        break; 
+        break;
     case 4:
         operation = "movl";
         break;
@@ -36,7 +38,7 @@ void CopyInstr::gen_asm(ostream &o)
     case 1:
         operation = "movb";
         reg = "%al";
-        break; 
+        break;
     case 4:
         operation = "movl";
         reg = "%eax";
@@ -65,7 +67,7 @@ void AddInstr::gen_asm(ostream &o)
         mov_op = "movb";
         add_op = "addb";
         reg = "%al";
-        break;  
+        break;
     case 4:
         mov_op = "movl";
         add_op = "addl";
@@ -97,7 +99,7 @@ void SubInstr::gen_asm(ostream &o)
         mov_op = "movb";
         sub_op = "subb";
         reg = "%al";
-        break; 
+        break;
     case 4:
         mov_op = "movl";
         sub_op = "subl";
@@ -281,4 +283,34 @@ void CmpInstr::gen_asm(ostream &o)
     o << "\t" << cond_op << "\t%al" << endl;
     o << "\tmovzbl\t%al, " << reg << endl;
     o << "\t" << mov_op << "\t" << reg << ", " << destination << endl;
+}
+
+void CallInstr::gen_asm(ostream &o)
+{
+    string mov_op = "";
+    string reg = "";
+    switch (t->get_size())
+    {
+    case 1:
+        mov_op = "movb";
+        reg = "%al";
+        break;
+    case 4:
+        mov_op = "movl";
+        reg = "%eax";
+        break;
+    case 8:
+        mov_op = "movq";
+        reg = "%rax";
+        break;
+    default:
+        break;
+    }
+
+    for (int i = 0; i < param_src.size(); i++)
+    {
+        o << "\tmovq\t" << param_src[i] << ", " << bb->get_cfg()->param_reg_64[i] << endl;  
+    }
+    o << "\tcall\t" << fname << endl;
+    o << "\t" << mov_op << "\t" << reg << ", " << dest << endl;     
 }

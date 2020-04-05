@@ -4,5 +4,8 @@
 
 string BlockStatement::buildIR(CFG *cfg)
 {
-    return block->buildIR(cfg);
+    cfg->enter_scope();
+    block->buildIR(cfg);
+    cfg->exit_scope();
+    return "";
 }

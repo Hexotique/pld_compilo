@@ -15,7 +15,6 @@ Type::Type(string type)
     {
         size = 8;
     }
-    
 }
 
 string Type::get_label()

@@ -5,9 +5,10 @@
 #include "Symbol.h"
 #include "Type.h"
 #include "IRInstr.h"
+#include "Declaration.h"
 
-CFG::CFG(Function *f)
-    : ast(f), tmp_var_count(0)
+CFG::CFG(Function *f, map<string, Symbol *> gs)
+    : ast(f), globalSymbols(gs), tmp_var_count(0)
 {
     BasicBlock *bb = new BasicBlock(this, f->getFctName());
     add_basic_block(bb);
@@ -40,13 +41,38 @@ void CFG::gen_asm(ostream &o)
 void CFG::gen_asm_prologue(ostream &o)
 {
     o << "\tpushq\t%rbp" << endl;
-    o << "\tmovq\t%rsp,\t%rbp" << endl;
+    o << "\tmovq\t%rsp, %rbp" << endl;
+    o << "\tsubq\t$" << symTab->get_cur_index() + 8 << ", %rsp" << endl;
+    for (int i = 0; i < ast->getParams().size(); i++)
+    {
+        string reg = "";
+        string mov_op = "";
+        string dest = var_to_asm(ast->getParams()[i]->get_identifier());
+        switch (ast->getParams()[i]->get_type()->get_size())
+        {
+        case 1:
+            mov_op = "movb";
+            reg = param_reg_8[i];
+            break;
+        case 4:
+            mov_op = "movl";
+            reg = param_reg_32[i];
+            break;
+        case 8:
+            mov_op = "movq";
+            reg = param_reg_64[i];
+        default:
+            break;
+        }
+        o << "\t" << mov_op << "\t" << reg << ", " <<  dest << endl;
+    }
 }
 
 void CFG::gen_asm_epilogue(ostream &o)
 {
+    o << "\taddq\t$" << symTab->get_cur_index() + 8 << ", %rsp" << endl;
     o << "\tpopq\t%rbp" << endl;
-    o << "\tret" << endl;
+    o << "\tretq" << endl;
 }
 
 void CFG::enter_scope()
@@ -92,4 +118,3 @@ string CFG::var_to_asm(string identifier)
     }
     return to_string(-1 * s->get_index()) + "(%rbp)";
 }
-

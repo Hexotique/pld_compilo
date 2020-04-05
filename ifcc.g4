@@ -4,9 +4,7 @@ prog: function+;
 
 function: ( TYPE | 'void') IDENTIFIER funcParams block;
 
-funcParams: '(' paramList? ')';
-
-paramList: declaration | paramList ',' declaration;
+funcParams: '(' (declaration (',' declaration)*)? ')';
 
 declaration: TYPE IDENTIFIER;
 
@@ -20,17 +18,17 @@ statement:
 	| expression ';'					# exprStatement;
 
 expression:
-	CONST										# constExpr
-	| IDENTIFIER								# varExpr
-	| CHAR						                # charExpr
-	| '!' expression							# notExpr
-	| expression MULT_DIV_OPERATOR expression	# multDivExpr
-	| expression ADD_SUB_OPERATOR expression	# addSubExpr
-	| expression BIT_OPERATOR expression		# bitExpr
-	| expression COMP_OPERATOR expression		# compExpr
-	| '(' expression ')'						# parExpr
-	| IDENTIFIER '=' expression					# assignExpr;
-
+	CONST													# constExpr
+	| IDENTIFIER											# varExpr
+	| CHAR													# charExpr
+	| '!' expression										# notExpr
+	| expression MULT_DIV_OPERATOR expression				# multDivExpr
+	| expression ADD_SUB_OPERATOR expression				# addSubExpr
+	| expression BIT_OPERATOR expression					# bitExpr
+	| expression COMP_OPERATOR expression					# compExpr
+	| '(' expression ')'									# parExpr
+	| IDENTIFIER '=' expression								# assignExpr
+	| IDENTIFIER '(' (expression (',' expression)*)? ')'	# funcExpr;
 
 TYPE: 'int' | 'char' | 'int64_t';
 RETURN: 'return';

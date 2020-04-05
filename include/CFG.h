@@ -8,6 +8,7 @@
  */
 #pragma once
 
+#include <map>
 #include <string>
 #include <vector>
 #include <iostream>
@@ -24,7 +25,11 @@ class IRInstr;
 class CFG
 {
 public:
-    CFG(Function *f);
+    const vector<string> param_reg_64 = {"%rdi", "%rsi", "%rdx", "%rcx", "%r8", "%r9"};
+    const vector<string> param_reg_32 = {"%edi", "%esi", "%edx", "%ecx", "%r8d", "%r9d"};
+    const vector<string> param_reg_8 = {"%dil", "%sil", "%dl", "%cl", "%r8b", "%r9b"};
+
+    CFG(Function *f, map<string, Symbol *> gs);
 
     BasicBlock *get_current_block();
 
@@ -47,7 +52,7 @@ public:
     Symbol *add_to_symbol_table(string label, Type *type);
 
     Symbol *create_temp_var(Type *type);
-    
+
     string var_to_asm(string identifier);
 
 protected:
@@ -56,6 +61,7 @@ protected:
     BasicBlock *currentBlock;
     vector<BasicBlock *> blocks;
 
+    map<string, Symbol *> globalSymbols;
     SymbolTable *symTab;
     int tmp_var_count;
 };

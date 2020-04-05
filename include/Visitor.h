@@ -19,8 +19,6 @@ public:
 
     antlrcpp::Any visitFuncParams(ifccParser::FuncParamsContext *context) override;
 
-    antlrcpp::Any visitParamList(ifccParser::ParamListContext *context) override;
-
     antlrcpp::Any visitDeclaration(ifccParser::DeclarationContext *context) override;
 
     antlrcpp::Any visitBlock(ifccParser::BlockContext *context) override;
@@ -38,6 +36,8 @@ public:
     antlrcpp::Any visitParExpr(ifccParser::ParExprContext *context) override;
 
     antlrcpp::Any visitNotExpr(ifccParser::NotExprContext *context) override;
+
+    antlrcpp::Any visitFuncExpr(ifccParser::FuncExprContext *context) override;
 
     antlrcpp::Any visitVarExpr(ifccParser::VarExprContext *context) override;
 

@@ -27,7 +27,7 @@ Feature | Implemented
 --- | :---:
 Parses `int` variable type |  X
 Parses `int64_t` variable type |
-Parses `char` variable type |
+Parses `char` variable type | X
 Handles comments in code | X
 Verifies that variables are declared before use | X
 Verifies that no variable is declared twice | X

@@ -28,11 +28,11 @@ public:
 
     BasicBlock *get_current_block();
 
+    SymbolTable *get_sym_tab();
+
     void add_basic_block(BasicBlock *bb);
 
     void gen_asm(ostream &o);
-
-    string var_to_asm(string identifier); /**< helper method: inputs a IR reg or input variable, returns e.g. "-24(%rbp)" for the proper value of 24 */
 
     void gen_asm_prologue(ostream &o);
 
@@ -44,11 +44,11 @@ public:
 
     void add_instruction(IRInstr *instr);
 
-    Symbol *add_to_symbol_table(string label, Type *t);
+    Symbol *add_to_symbol_table(string label, Type *type);
 
-    Symbol *create_temp_var(Type *t);
-
-    SymbolTable *get_symbol_table();
+    Symbol *create_temp_var(Type *type);
+    
+    string var_to_asm(string identifier);
 
 protected:
     Function *ast;
@@ -56,5 +56,6 @@ protected:
     BasicBlock *currentBlock;
     vector<BasicBlock *> blocks;
 
-    SymbolTable *currentTable;
+    SymbolTable *symTab;
+    int tmp_var_count;
 };

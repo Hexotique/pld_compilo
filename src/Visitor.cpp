@@ -11,12 +11,15 @@
 #include "Assignment.h"
 #include "AddSubExpr.h"
 #include "BitExpr.h"
+#include "CompExpr.h"
+#include "NotExpr.h"
 #include "Declaration.h"
 #include "Definition.h"
 #include "DeclarationStatement.h"
 #include "ExpressionStatement.h"
 #include "Var.h"
 #include "MultDivExpr.h"
+#include "BlockStatement.h"
 
 antlrcpp::Any Visitor::visitProg(ifccParser::ProgContext *context)
 {
@@ -88,6 +91,12 @@ antlrcpp::Any Visitor::visitDefinitionStatement(ifccParser::DefinitionStatementC
     return (Statement *)new Definition(dec, expr);
 }
 
+antlrcpp::Any Visitor::visitBlockStatement(ifccParser::BlockStatementContext *context)
+{
+    Block *block = visit(context->block());
+    return (Statement *)new BlockStatement(block);
+}
+
 antlrcpp::Any Visitor::visitExprStatement(ifccParser::ExprStatementContext *context)
 {
     Expression *expr = visit(context->expression());
@@ -102,6 +111,12 @@ antlrcpp::Any Visitor::visitVarExpr(ifccParser::VarExprContext *context)
 {
     return (Expression *)new Var(context->IDENTIFIER()->getText());
 }
+
+antlrcpp::Any Visitor::visitNotExpr(ifccParser::NotExprContext *context)
+{
+    Expression *expr= (Expression *)visit(context->expression());
+    return (Expression *)new NotExpr(expr);
+};
 
 antlrcpp::Any Visitor::visitAddSubExpr(ifccParser::AddSubExprContext *context)
 {
@@ -125,6 +140,14 @@ antlrcpp::Any Visitor::visitBitExpr(ifccParser::BitExprContext *context)
     Expression *expr1 = (Expression *)visit(context->expression(0));
     Expression *expr2 = (Expression *)visit(context->expression(1));
     return (Expression *)new BitExpr(expr1, expr2, symb);
+}
+
+antlrcpp::Any Visitor::visitCompExpr(ifccParser::CompExprContext *context)
+{
+    string symb = context->COMP_OPERATOR()->getText();
+    Expression *expr1 = (Expression *)visit(context->expression(0));
+    Expression *expr2 = (Expression *)visit(context->expression(1));
+    return (Expression *)new CompExpr(expr1, expr2, symb);
 }
 
 antlrcpp::Any Visitor::visitAssignExpr(ifccParser::AssignExprContext *context)

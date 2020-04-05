@@ -16,15 +16,18 @@ statement:
 	RETURN expression? ';'				# returnStatement
 	| declaration (',' IDENTIFIER)* ';'	# declarationStatement
 	| declaration '=' expression ';'	# definitionStatement
+	| block								# blockStatement
 	| expression ';'					# exprStatement;
 
 expression:
 	CONST										# constExpr
 	| IDENTIFIER								# varExpr
 	| CHAR						                # charExpr
+	| '!' expression							# notExpr
 	| expression MULT_DIV_OPERATOR expression	# multDivExpr
 	| expression ADD_SUB_OPERATOR expression	# addSubExpr
 	| expression BIT_OPERATOR expression		# bitExpr
+	| expression COMP_OPERATOR expression		# compExpr
 	| '(' expression ')'						# parExpr
 	| IDENTIFIER '=' expression					# assignExpr;
 
@@ -43,6 +46,7 @@ fragment ESCCHAR: ['"?abefnrtv\\];
 ADD_SUB_OPERATOR: '+' | '-';
 MULT_DIV_OPERATOR: '*' | '/';
 BIT_OPERATOR: '^' | '&' | '|';
+COMP_OPERATOR: '==' | '!=' | '>' | '<' | '<=' | '>=';
 
 COMMENT: ('/*' .*? '*/' | '//' .*? '\n') -> skip;
 DIRECTIVE: '#' .*? '\n' -> skip;

@@ -14,10 +14,12 @@ string BitExpr::buildIR(CFG *cfg)
     {
         cfg->add_instruction(new AndInstr(get_type(), dest, src1, src2));
     }
-    else if (op == "^"){
+    else if (op == "^")
+    {
         cfg->add_instruction(new XOrInstr(get_type(), dest, src1, src2));
     }
-    else {
+    else
+    {
         cfg->add_instruction(new OrInstr(get_type(), dest, src1, src2));
     }
     return s->get_identifier();

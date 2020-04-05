@@ -252,3 +252,33 @@ void XOrInstr::gen_asm(ostream &o)
     o << "\t" << xor_op << "\t" << source_2 << ", " << reg << endl;
     o << "\t" << mov_op << "\t" << reg << ", " << destination << endl;
 }
+
+void CmpInstr::gen_asm(ostream &o)
+{
+    string mov_op = "";
+    string cmp_op = "";
+    string reg = "";
+    string cond_op = "set" + comparison;
+
+    switch (t->get_size())
+    {
+    case 4:
+        mov_op = "movl";
+        cmp_op = "cmpl";
+        reg = "%eax";
+        break;
+    case 8:
+        mov_op = "movq";
+        cmp_op = "cmpq";
+        reg = "%rax";
+        break;
+    default:
+        break;
+    }
+
+    o << "\t" << mov_op << "\t" << source_1 << ", " << reg << endl;
+    o << "\t" << cmp_op << "\t" << source_2 << ", " << reg << endl;
+    o << "\t" << cond_op << "\t%al" << endl;
+    o << "\tmovzbl\t%al, " << reg << endl;
+    o << "\t" << mov_op << "\t" << reg << ", " << destination << endl;
+}

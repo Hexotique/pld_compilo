@@ -21,6 +21,7 @@
 #include "MultDivExpr.h"
 #include "BlockStatement.h"
 #include "FuncExpr.h"
+#include "ForStatement.h"
 
 antlrcpp::Any Visitor::visitProg(ifccParser::ProgContext *context)
 {
@@ -107,7 +108,11 @@ antlrcpp::Any Visitor::visitBlockStatement(ifccParser::BlockStatementContext *co
 
 antlrcpp::Any Visitor::visitForStatement(ifccParser::ForStatementContext *context)
 {
-    return 0;
+    Expression *i = visit(context->expression(0));
+    Expression *c = visit(context->expression(1));
+    Expression *u = visit(context->expression(2));
+    Statement *s = visit(context->statement());
+    return (Statement *)new ForStatement(i, c, u, s);
 }
 
 antlrcpp::Any Visitor::visitWhileStatement(ifccParser::WhileStatementContext *context)

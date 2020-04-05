@@ -66,14 +66,7 @@ antlrcpp::Any Visitor::visitBlock(ifccParser::BlockContext *context)
 antlrcpp::Any Visitor::visitReturnStatement(ifccParser::ReturnStatementContext *context)
 {
     Expression *expr = visit(context->expression());
-    if (expr->get_type()->get_label() == "int")
-    {
-        return (Statement *)new Return(new Type("int"), expr);
-    }
-    else
-    {
-        return (Statement *)new Return(new Type("char"), expr);
-    }
+    return (Statement *)new Return(expr->get_type(), expr);
 }
 
 antlrcpp::Any Visitor::visitDeclarationStatement(ifccParser::DeclarationStatementContext *context)

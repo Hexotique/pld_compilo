@@ -21,11 +21,11 @@ statement:
 expression:
 	CONST										# constExpr
 	| IDENTIFIER								# varExpr
+	| CHAR						                # charExpr
 	| expression MULT_DIV_OPERATOR expression	# multDivExpr
 	| expression ADD_SUB_OPERATOR expression	# addSubExpr
 	| expression BIT_OPERATOR expression		# bitExpr
 	| '(' expression ')'						# parExpr
-	| CHAR						                # charExpr
 	| IDENTIFIER '=' expression					# assignExpr;
 
 

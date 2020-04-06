@@ -47,12 +47,15 @@ Handles `<` and `<=` comparison operator | X
 Handles `>` and `>=` comparison operator | X
 Handles unary `!` operator | X
 Handles nested blocks with different contexts | X
-Handles function declaration |
-Handles function definition |
-Handles function parameters |
-Handles `if` block |
-Handles `else` block |
-Handles `else if` block |
+Handles function declaration (All declarations are considered as though done before all definitions) | X
+Verifies that a function is either declared or defined before use (warning is emitted if otherwise) | X
+Handles function definition | X
+Handles function parameters | X
+Handles `if` block | X
+Handles `else` block | X
+Handles `else if` block | X
+Handles `while` loop | X
+Handles `for` loop | X
 
 ## Past project management (until 27/03/20)
 

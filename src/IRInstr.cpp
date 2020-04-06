@@ -8,6 +8,16 @@ void IRInstr::set_block(BasicBlock *block)
     bb = block;
 }
 
+string IRInstr::get_dest()
+{
+    return destination;
+}
+
+Type *IRInstr::get_type()
+{
+    return t;
+}
+
 void LdConstInstr::gen_asm(ostream &o)
 {
     string operation = "";
@@ -312,5 +322,5 @@ void CallInstr::gen_asm(ostream &o)
         o << "\tmovq\t" << param_src[i] << ", " << bb->get_cfg()->param_reg_64[i] << endl;  
     }
     o << "\tcall\t" << fname << endl;
-    o << "\t" << mov_op << "\t" << reg << ", " << dest << endl;     
+    o << "\t" << mov_op << "\t" << reg << ", " << destination << endl;     
 }

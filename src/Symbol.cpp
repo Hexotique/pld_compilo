@@ -9,3 +9,8 @@ int Symbol::get_index()
 {
     return index;
 }
+
+Type *Symbol::get_type()
+{
+    return type;
+}

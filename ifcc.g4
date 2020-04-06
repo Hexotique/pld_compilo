@@ -8,16 +8,23 @@ funcParams: '(' (declaration (',' declaration)*)? ')';
 
 declaration: TYPE IDENTIFIER;
 
+define: declaration '=' expression;
+
 block: '{' statement* '}';
 
+elif: 'else if' '(' expression ')' statement;
+
+el: 'else' statement;
+
 statement:
-	RETURN expression? ';'													# returnStatement
-	| declaration (',' IDENTIFIER)* ';'										# declarationStatement
-	| declaration '=' expression ';'										# definitionStatement
-	| block																	# blockStatement
-	| 'for' '(' expression? ';' expression? ';' expression? ')' statement	# forStatement
-	| 'while' '(' expression? ')' statement									# whileStatement
-	| expression ';'														# exprStatement;
+	RETURN expression? ';'																# returnStatement
+	| declaration (',' IDENTIFIER)* ';'													# declarationStatement
+	| define ';'																		# definitionStatement
+	| block																				# blockStatement
+	| 'if' '(' expression ')' statement elif* el?										# ifStatement
+	| 'for' '(' (define | expression)? ';' expression? ';' expression? ')' statement	# forStatement
+	| 'while' '(' expression? ')' statement												# whileStatement
+	| expression ';'																	# exprStatement;
 
 expression:
 	CONST													# constExpr

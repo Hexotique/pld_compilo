@@ -48,6 +48,16 @@ public:
 
     void add_IRInstr(IRInstr *instr);
 
+    string get_label();
+
+    string get_test_var_name();
+
+    BasicBlock *get_exit_true();
+
+    BasicBlock *get_exit_false();
+
+    void set_test_var_name(string tvn);
+
     void set_exit_true(BasicBlock *bb);
 
     void set_exit_false(BasicBlock *bb);

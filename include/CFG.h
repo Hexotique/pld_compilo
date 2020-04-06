@@ -15,7 +15,8 @@
 
 using namespace std;
 
-class Function;
+class FuncDefinition;
+class FuncDeclaration;
 class BasicBlock;
 class SymbolTable;
 class Symbol;
@@ -29,7 +30,7 @@ public:
     const vector<string> param_reg_32 = {"%edi", "%esi", "%edx", "%ecx", "%r8d", "%r9d"};
     const vector<string> param_reg_8 = {"%dil", "%sil", "%dl", "%cl", "%r8b", "%r9b"};
 
-    CFG(Function *f, map<string, Symbol *> gs);
+    CFG(FuncDefinition *f, map<string, FuncDeclaration *> gs);
 
     BasicBlock *get_current_block();
 
@@ -61,13 +62,15 @@ public:
 
     string gen_block_label();
 
+    map<string, FuncDeclaration *> get_global_funcs();
+
 protected:
-    Function *ast;
+    FuncDefinition *ast;
 
     BasicBlock *currentBlock;
     vector<BasicBlock *> blocks;
 
-    map<string, Symbol *> globalSymbols;
+    map<string, FuncDeclaration *> globalFuncs;
     SymbolTable *symTab;
     int tmp_var_count;
 };

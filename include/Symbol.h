@@ -8,15 +8,6 @@ using namespace std;
 
 class Type;
 
-enum class SymbolScope
-{
-    global,
-    function,
-    loop,
-    conditional,
-    anonymous
-};
-
 class Symbol
 {
 public:

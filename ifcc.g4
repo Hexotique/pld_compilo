@@ -1,8 +1,10 @@
 grammar ifcc;
 
-prog: function+;
+prog: ( function | funcDeclaration ';')+;
 
-function: ( TYPE | 'void') IDENTIFIER funcParams block;
+funcDeclaration: ( TYPE | 'void') IDENTIFIER funcParams;
+
+function: funcDeclaration block;
 
 funcParams: '(' (declaration (',' declaration)*)? ')';
 

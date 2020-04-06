@@ -4,7 +4,7 @@
 
 using namespace std;
 
-class Function;
+class FuncDefinition;
 class CFG;
 
 class Program
@@ -12,12 +12,12 @@ class Program
 public:
     Program() {}
 
-    vector<Function *> getFunctions();
+    vector<FuncDefinition *> getFunctions();
 
-    void addFunction(Function *f);
+    void addFunction(FuncDefinition *f);
 
     vector<CFG *> buildIR();
 
 protected:
-    vector<Function *> fcts;
+    vector<FuncDefinition *> fcts;
 };

@@ -1,5 +1,6 @@
 #include "CFG.h"
-#include "Function.h"
+#include "FuncDefinition.h"
+#include "FuncDeclaration.h"
 #include "BasicBlock.h"
 #include "SymbolTable.h"
 #include "Symbol.h"
@@ -7,7 +8,7 @@
 #include "IRInstr.h"
 #include "Declaration.h"
 
-CFG::CFG(Function *f, map<string, Symbol *> gs)
+CFG::CFG(FuncDefinition *f, map<string, Symbol *> gs)
     : ast(f), globalSymbols(gs), tmp_var_count(0)
 {
     BasicBlock *bb = add_basic_block();
@@ -35,8 +36,8 @@ BasicBlock *CFG::add_basic_block()
 void CFG::gen_asm(ostream &o)
 {
     o << ".text" << endl;
-    o << ".globl\t" << ast->getFctName() << endl;
-    o << ast->getFctName() << ':' << endl;
+    o << ".globl\t" << ast->getFctDec()->getFctName() << endl;
+    o << ast->getFctDec()->getFctName() << ':' << endl;
     gen_asm_prologue(o);
     for (BasicBlock *block : blocks)
     {
@@ -49,12 +50,12 @@ void CFG::gen_asm_prologue(ostream &o)
     o << "\tpushq\t%rbp" << endl;
     o << "\tmovq\t%rsp, %rbp" << endl;
     o << "\tsubq\t$" << symTab->get_cur_index() + 8 << ", %rsp" << endl;
-    for (int i = 0; i < ast->getParams().size(); i++)
+    for (int i = 0; i < ast->getFctDec()->getParams().size(); i++)
     {
         string reg = "";
         string mov_op = "";
-        string dest = var_to_asm(ast->getParams()[i]->get_identifier());
-        switch (ast->getParams()[i]->get_type()->get_size())
+        string dest = var_to_asm(ast->getFctDec()->getParams()[i]->get_identifier());
+        switch (ast->getFctDec()->getParams()[i]->get_type()->get_size())
         {
         case 1:
             mov_op = "movb";
@@ -138,5 +139,5 @@ Type *CFG::get_var_type(string identifier)
 
 string CFG::gen_block_label()
 {
-    return ast->getFctName() + "_LB" + to_string(blocks.size());
+    return ast->getFctDec()->getFctName() + "_LB" + to_string(blocks.size());
 }

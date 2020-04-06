@@ -1,13 +1,13 @@
 #include "Program.h"
 #include "CFG.h"
-#include "Function.h"
+#include "FuncDefinition.h"
 
-vector<Function *> Program::getFunctions()
+vector<FuncDefinition *> Program::getFunctions()
 {
     return fcts;
 }
 
-void Program::addFunction(Function *f)
+void Program::addFunction(FuncDefinition *f)
 {
     fcts.push_back(f);
 }
@@ -15,7 +15,7 @@ void Program::addFunction(Function *f)
 vector<CFG *> Program::buildIR()
 {
     vector<CFG *> cfgs;
-    for (Function *f : fcts)
+    for (FuncDefinition *f : fcts)
     {
         CFG *cfg = new CFG(f, map<string, Symbol *>());
         f->buildIR(cfg);

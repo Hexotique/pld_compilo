@@ -15,6 +15,8 @@ class Visitor : public ifccVisitor
 public:
     antlrcpp::Any visitProg(ifccParser::ProgContext *context) override;
 
+    antlrcpp::Any visitFuncDeclaration(ifccParser::FuncDeclarationContext *context) override;
+
     antlrcpp::Any visitFunction(ifccParser::FunctionContext *context) override;
 
     antlrcpp::Any visitFuncParams(ifccParser::FuncParamsContext *context) override;

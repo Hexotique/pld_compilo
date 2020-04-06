@@ -1,7 +1,8 @@
 #include <cstring>
 #include "Visitor.h"
 #include "Program.h"
-#include "Function.h"
+#include "FuncDeclaration.h"
+#include "FuncDefinition.h"
 #include "Expression.h"
 #include "Block.h"
 #include "Type.h"
@@ -31,22 +32,27 @@ antlrcpp::Any Visitor::visitProg(ifccParser::ProgContext *context)
     Program *prog = new Program();
     for (const auto f : context->function())
     {
-        Function *funct = (Function *)visit(f);
+        FuncDefinition *funct = visit(f);
         prog->addFunction(funct);
     }
     return prog;
 }
 
-antlrcpp::Any Visitor::visitFunction(ifccParser::FunctionContext *context)
+antlrcpp::Any Visitor::visitFuncDeclaration(ifccParser::FuncDeclarationContext *context)
 {
     string fname = context->IDENTIFIER()->getText();
     string rt = context->TYPE()->getText();
     vector<Declaration *> fparams = visit(context->funcParams());
-
     Type *retType = new Type(rt);
 
-    Block *block = (Block *)visit(context->block());
-    return new Function(fname, retType, block, fparams);
+    return new FuncDeclaration(fname, retType, fparams);
+}
+
+antlrcpp::Any Visitor::visitFunction(ifccParser::FunctionContext *context)
+{
+    FuncDeclaration *fctDec = visit(context->funcDeclaration());
+    Block *block = visit(context->block());
+    return new FuncDefinition(fctDec, block);
 }
 
 antlrcpp::Any Visitor::visitFuncParams(ifccParser::FuncParamsContext *context)
@@ -85,7 +91,7 @@ antlrcpp::Any Visitor::visitElif(ifccParser::ElifContext *context)
     return new ElseIf(expr, stmt);
 }
 
-antlrcpp::Any Visitor::visitEl(ifccParser::ElContext *context) 
+antlrcpp::Any Visitor::visitEl(ifccParser::ElContext *context)
 {
     return (Statement *)visit(context->statement());
 }
@@ -132,8 +138,8 @@ antlrcpp::Any Visitor::visitIfStatement(ifccParser::IfStatementContext *context)
     Expression *ifExpr = visit(context->expression());
     Statement *thenStmt = visit(context->statement());
     Statement *elseStmt = nullptr;
-    
-    for (const auto ei : context->elif())
+
+    for (const auto ei : context->elif ())
     {
         elifs.push_back(visit(ei));
     }
@@ -167,7 +173,8 @@ antlrcpp::Any Visitor::visitExprStatement(ifccParser::ExprStatementContext *cont
 antlrcpp::Any Visitor::visitParExpr(ifccParser::ParExprContext *context)
 {
     return (Expression *)visit(context->expression());
-};
+}
+
 antlrcpp::Any Visitor::visitVarExpr(ifccParser::VarExprContext *context)
 {
     return (Expression *)new Var(context->IDENTIFIER()->getText());
@@ -177,7 +184,7 @@ antlrcpp::Any Visitor::visitNotExpr(ifccParser::NotExprContext *context)
 {
     Expression *expr = (Expression *)visit(context->expression());
     return (Expression *)new NotExpr(expr);
-};
+}
 
 antlrcpp::Any Visitor::visitFuncExpr(ifccParser::FuncExprContext *context)
 {

@@ -9,13 +9,13 @@ using namespace std;
 
 class Declaration;
 class Type;
-class Block;
+class CFG;
 
-class Function : public ASTNode
+class FuncDeclaration : public ASTNode
 {
 public:
-    Function(string fn, Type *t, Block *b, vector<Declaration *> fp)
-        : fctName(fn), retType(t), fctBlock(b), fctParams(fp) {}
+    FuncDeclaration(string fn, Type *t, vector<Declaration *> fp)
+        : fctName(fn), retType(t), fctParams(fp) {}
 
     void addParam(Declaration *);
 
@@ -23,11 +23,15 @@ public:
 
     string getFctName();
 
+    Type *getRetType();
+
     vector<Declaration *> getParams();
 
 protected:
     string fctName;
     Type *retType;
     vector<Declaration *> fctParams;
-    Block *fctBlock;
 };
+
+
+

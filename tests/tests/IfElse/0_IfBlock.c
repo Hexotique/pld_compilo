@@ -1,6 +1,6 @@
 int main() {
     int a = 6;
-    if (a + 1) {
+    if (a) {
         a = a + 2;
     }
     return a;

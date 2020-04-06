@@ -37,7 +37,7 @@ public:
 
     SymbolTable *get_sym_tab();
 
-    void add_basic_block(BasicBlock *bb);
+    BasicBlock *add_basic_block();
 
     void gen_asm(ostream &o);
 

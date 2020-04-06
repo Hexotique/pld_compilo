@@ -10,8 +10,7 @@
 CFG::CFG(Function *f, map<string, Symbol *> gs)
     : ast(f), globalSymbols(gs), tmp_var_count(0)
 {
-    BasicBlock *bb = new BasicBlock(this, gen_block_label());
-    add_basic_block(bb);
+    BasicBlock *bb = add_basic_block();
     set_current_block(bb);
     symTab = new SymbolTable();
 }
@@ -26,9 +25,11 @@ void CFG::set_current_block(BasicBlock *block)
     currentBlock = block;
 }
 
-void CFG::add_basic_block(BasicBlock *bb)
+BasicBlock *CFG::add_basic_block()
 {
+    BasicBlock *bb = new BasicBlock(this, gen_block_label());
     blocks.push_back(bb);
+    return bb;
 }
 
 void CFG::gen_asm(ostream &o)

@@ -8,12 +8,9 @@ string WhileStatement::buildIR(CFG *cfg)
 {
     BasicBlock *curr_block = cfg->get_current_block();
 
-    BasicBlock *test_block = new BasicBlock(cfg, cfg->gen_block_label());
-    cfg->add_basic_block(test_block);
-    BasicBlock *body_block = new BasicBlock(cfg, cfg->gen_block_label());
-    cfg->add_basic_block(body_block);
-    BasicBlock *aftw_block = new BasicBlock(cfg, cfg->gen_block_label());
-    cfg->add_basic_block(aftw_block);
+    BasicBlock *test_block = cfg->add_basic_block();
+    BasicBlock *body_block = cfg->add_basic_block();
+    BasicBlock *aftw_block = cfg->add_basic_block();
 
     aftw_block->set_exit_true(curr_block->get_exit_true());
     aftw_block->set_exit_false(curr_block->get_exit_false());

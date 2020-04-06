@@ -31,6 +31,12 @@ public:
 
     antlrcpp::Any visitEl(ifccParser::ElContext *context) override;
 
+    antlrcpp::Any visitInitExpr(ifccParser::InitExprContext *context) override;
+
+    antlrcpp::Any visitCondExpr(ifccParser::CondExprContext *context) override;
+
+    antlrcpp::Any visitIncrExpr(ifccParser::IncrExprContext *context) override;
+
     antlrcpp::Any visitDeclarationStatement(ifccParser::DeclarationStatementContext *context) override;
 
     antlrcpp::Any visitReturnStatement(ifccParser::ReturnStatementContext *context) override;

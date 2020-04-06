@@ -96,6 +96,30 @@ antlrcpp::Any Visitor::visitEl(ifccParser::ElContext *context)
     return (Statement *)visit(context->statement());
 }
 
+antlrcpp::Any Visitor::visitInitExpr(ifccParser::InitExprContext *context)
+{
+    Statement *s = nullptr;
+    if (context->define())
+    {
+        s = visit(context->define());
+    }
+    else
+    {
+        s = new ExpressionStatement((Expression *)visit(context->expression()));
+    }
+    return s;
+}
+
+antlrcpp::Any Visitor::visitCondExpr(ifccParser::CondExprContext *context)
+{
+    return visit(context->expression());
+}
+
+antlrcpp::Any Visitor::visitIncrExpr(ifccParser::IncrExprContext *context)
+{
+    return visit(context->expression());
+}
+
 antlrcpp::Any Visitor::visitReturnStatement(ifccParser::ReturnStatementContext *context)
 {
     Expression *expr = visit(context->expression());
@@ -154,7 +178,12 @@ antlrcpp::Any Visitor::visitIfStatement(ifccParser::IfStatementContext *context)
 
 antlrcpp::Any Visitor::visitForStatement(ifccParser::ForStatementContext *context)
 {
-    return 0;
+    Statement *init = context->initExpr() ? (Statement *)visit(context->initExpr()) : nullptr;
+    Expression *cond = context->condExpr() ? (Expression *)visit(context->condExpr()) : nullptr;
+    Expression *incr = context->incrExpr() ? (Expression *)visit(context->incrExpr()) : nullptr;
+    Statement *body = visit(context->statement());
+
+    return (Statement *)new ForStatement(init, cond, incr, body);
 }
 
 antlrcpp::Any Visitor::visitWhileStatement(ifccParser::WhileStatementContext *context)

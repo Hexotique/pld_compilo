@@ -27,6 +27,8 @@ public:
 
     int get_index();
 
+    Type *get_type();
+
 protected:
     Type *type;
     string identifier;

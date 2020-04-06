@@ -10,8 +10,8 @@
 CFG::CFG(Function *f, map<string, Symbol *> gs)
     : ast(f), globalSymbols(gs), tmp_var_count(0)
 {
-    BasicBlock *bb = new BasicBlock(this, f->getFctName());
-    add_basic_block(bb);
+    BasicBlock *bb = add_basic_block();
+    set_current_block(bb);
     symTab = new SymbolTable();
 }
 
@@ -20,10 +20,16 @@ BasicBlock *CFG::get_current_block()
     return currentBlock;
 }
 
-void CFG::add_basic_block(BasicBlock *bb)
+void CFG::set_current_block(BasicBlock *block)
 {
+    currentBlock = block;
+}
+
+BasicBlock *CFG::add_basic_block()
+{
+    BasicBlock *bb = new BasicBlock(this, gen_block_label());
     blocks.push_back(bb);
-    currentBlock = bb;
+    return bb;
 }
 
 void CFG::gen_asm(ostream &o)
@@ -117,4 +123,20 @@ string CFG::var_to_asm(string identifier)
         exit(1);
     }
     return to_string(-1 * s->get_index()) + "(%rbp)";
+}
+
+Type *CFG::get_var_type(string identifier)
+{
+    Symbol *s = symTab->lookup(identifier);
+    if (s == nullptr)
+    {
+        cerr << "error: '" << identifier << "' undeclared" << endl;
+        exit(1);
+    }
+    return s->get_type();
+}
+
+string CFG::gen_block_label()
+{
+    return ast->getFctName() + "_LB" + to_string(blocks.size());
 }

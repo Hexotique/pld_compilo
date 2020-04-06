@@ -33,9 +33,11 @@ public:
 
     BasicBlock *get_current_block();
 
+    void set_current_block(BasicBlock *block);
+
     SymbolTable *get_sym_tab();
 
-    void add_basic_block(BasicBlock *bb);
+    BasicBlock *add_basic_block();
 
     void gen_asm(ostream &o);
 
@@ -54,6 +56,10 @@ public:
     Symbol *create_temp_var(Type *type);
 
     string var_to_asm(string identifier);
+
+    Type *get_var_type(string identifier);
+
+    string gen_block_label();
 
 protected:
     Function *ast;

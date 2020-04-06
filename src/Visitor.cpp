@@ -21,6 +21,10 @@
 #include "MultDivExpr.h"
 #include "BlockStatement.h"
 #include "FuncExpr.h"
+#include "ForStatement.h"
+#include "WhileStatement.h"
+#include "IfStatement.h"
+#include "ElseIf.h"
 
 antlrcpp::Any Visitor::visitProg(ifccParser::ProgContext *context)
 {
@@ -74,6 +78,18 @@ antlrcpp::Any Visitor::visitBlock(ifccParser::BlockContext *context)
     return b;
 }
 
+antlrcpp::Any Visitor::visitElif(ifccParser::ElifContext *context)
+{
+    Expression *expr = visit(context->expression());
+    Statement *stmt = visit(context->statement());
+    return new ElseIf(expr, stmt);
+}
+
+antlrcpp::Any Visitor::visitEl(ifccParser::ElContext *context) 
+{
+    return (Statement *)visit(context->statement());
+}
+
 antlrcpp::Any Visitor::visitReturnStatement(ifccParser::ReturnStatementContext *context)
 {
     Expression *expr = visit(context->expression());
@@ -92,17 +108,54 @@ antlrcpp::Any Visitor::visitDeclarationStatement(ifccParser::DeclarationStatemen
     return (Statement *)new DeclarationStatement(decs);
 }
 
-antlrcpp::Any Visitor::visitDefinitionStatement(ifccParser::DefinitionStatementContext *context)
+antlrcpp::Any Visitor::visitDefine(ifccParser::DefineContext *context)
 {
     Declaration *dec = visit(context->declaration());
     Expression *expr = visit(context->expression());
     return (Statement *)new Definition(dec, expr);
 }
 
+antlrcpp::Any Visitor::visitDefinitionStatement(ifccParser::DefinitionStatementContext *context)
+{
+    return (Statement *)visit(context->define());
+}
+
 antlrcpp::Any Visitor::visitBlockStatement(ifccParser::BlockStatementContext *context)
 {
     Block *block = visit(context->block());
     return (Statement *)new BlockStatement(block);
+}
+
+antlrcpp::Any Visitor::visitIfStatement(ifccParser::IfStatementContext *context)
+{
+    vector<ElseIf *> elifs;
+    Expression *ifExpr = visit(context->expression());
+    Statement *thenStmt = visit(context->statement());
+    Statement *elseStmt = nullptr;
+    
+    for (const auto ei : context->elif())
+    {
+        elifs.push_back(visit(ei));
+    }
+
+    if (context->el())
+    {
+        elseStmt = visit(context->el());
+    }
+
+    return (Statement *)new IfStatement(ifExpr, thenStmt, elifs, elseStmt);
+}
+
+antlrcpp::Any Visitor::visitForStatement(ifccParser::ForStatementContext *context)
+{
+    return 0;
+}
+
+antlrcpp::Any Visitor::visitWhileStatement(ifccParser::WhileStatementContext *context)
+{
+    Expression *expr = visit(context->expression());
+    Statement *stmt = visit(context->statement());
+    return (Statement *)new WhileStatement(expr, stmt);
 }
 
 antlrcpp::Any Visitor::visitExprStatement(ifccParser::ExprStatementContext *context)

@@ -19,6 +19,12 @@ string FuncExpr::buildIR(CFG *cfg)
     {
         funcLabel += "@PLT";
     }
+
+    if (cfg->get_global_funcs().count(funcLabel) == 0)
+    {
+        cerr << "warning: function '" << funcLabel << "' is not declared before usage." << endl; 
+    }
+
     cfg->add_instruction(new CallInstr(type, funcLabel, dest, params));
     return s->get_identifier();
 }

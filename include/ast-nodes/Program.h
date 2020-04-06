@@ -5,6 +5,7 @@
 using namespace std;
 
 class FuncDefinition;
+class FuncDeclaration;
 class CFG;
 
 class Program
@@ -19,5 +20,6 @@ public:
     vector<CFG *> buildIR();
 
 protected:
-    vector<FuncDefinition *> fcts;
+    vector<FuncDeclaration *> fctDecs;
+    vector<FuncDefinition *> fctDefs;
 };

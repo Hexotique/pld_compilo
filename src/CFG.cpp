@@ -8,8 +8,8 @@
 #include "IRInstr.h"
 #include "Declaration.h"
 
-CFG::CFG(FuncDefinition *f, map<string, Symbol *> gs)
-    : ast(f), globalSymbols(gs), tmp_var_count(0)
+CFG::CFG(FuncDefinition *f, map<string, FuncDeclaration *> gs)
+    : ast(f), globalFuncs(gs), tmp_var_count(0)
 {
     BasicBlock *bb = add_basic_block();
     set_current_block(bb);
@@ -140,4 +140,9 @@ Type *CFG::get_var_type(string identifier)
 string CFG::gen_block_label()
 {
     return ast->getFctDec()->getFctName() + "_LB" + to_string(blocks.size());
+}
+
+map<string, FuncDeclaration *> CFG::get_global_funcs()
+{
+    return globalFuncs;
 }

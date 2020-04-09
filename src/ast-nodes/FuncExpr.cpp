@@ -1,4 +1,5 @@
 #include "FuncExpr.h"
+#include "FuncDeclaration.h"
 #include "CFG.h"
 #include "Symbol.h"
 #include "Type.h"
@@ -23,6 +24,11 @@ string FuncExpr::buildIR(CFG *cfg)
     if (cfg->get_global_funcs().count(funcLabel) == 0)
     {
         cerr << "warning: function '" << funcLabel << "' is not declared before usage." << endl; 
+    }
+    else if (cfg->get_global_funcs()[funcLabel]->getParams().size() != params.size())
+    {
+        cerr << "error: function '" << funcLabel << "' has no signature with " << params.size() << "parameters." << endl;
+        exit(1); 
     }
 
     cfg->add_instruction(new CallInstr(type, funcLabel, dest, params));

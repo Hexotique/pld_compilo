@@ -77,9 +77,11 @@ void CFG::gen_asm_prologue(ostream &o)
 
 void CFG::gen_asm_epilogue(ostream &o)
 {
-    o << "\taddq\t$" << symTab->get_cur_index() + 8 << ", %rsp" << endl;
-    o << "\tpopq\t%rbp" << endl;
-    o << "\tretq" << endl;
+    //o << "\taddq\t$" << symTab->get_cur_index() + 8 << ", %rsp" << endl;
+    //o << "\tpopq\t%rbp" << endl;
+    //o << "\tretq" << endl;
+    o << "\tleave" << endl;
+    o << "\tret" << endl;
 }
 
 void CFG::enter_scope()
@@ -111,7 +113,8 @@ Symbol *CFG::add_to_symbol_table(string label, Type *t)
 
 Symbol *CFG::create_temp_var(Type *t)
 {
-    string label = "!tmp" + to_string(tmp_var_count++ + t->get_size());
+    tmp_var_count += t->get_size();
+    string label = "!tmp" + to_string(tmp_var_count);
     return add_to_symbol_table(label, t);
 }
 
